@@ -104,6 +104,17 @@ test('site exposes new tools, Hindi content, accessibility labels and PDF printi
   assert.match(app, /installButton && installStatus/);
 });
 
+test('event binding is null-safe and the offline cache is versioned for the fix', () => {
+  const app = load('assets/js/app.js');
+  const html = load('index.html');
+  const serviceWorker = load('service-worker.js');
+  assert.match(app, /const on = \(id, eventName, handler, options\) => \{/);
+  assert.match(app, /if \(element\) element\.addEventListener\(eventName, handler, options\)/);
+  assert.doesNotMatch(app, /\$\('[^']+'\)\.addEventListener\(/);
+  assert.match(html, /name="mobile-web-app-capable" content="yes"/);
+  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v6'/);
+});
+
 test('manifest and offline assets are wired correctly', () => {
   const manifest = JSON.parse(load('manifest.webmanifest'));
   assert.equal(manifest.display, 'standalone');
