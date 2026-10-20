@@ -18,4 +18,4 @@ jobs:
         with:
           node-version: 22
       - name: Run calculator and site checks
-        run: node --test
+        run: node --check assets/js/app.js && node --check assets/js/calculator.js && node --check assets/js/date-utils.js && node --test
