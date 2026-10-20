@@ -1,7 +1,7 @@
 {
-  "name": "Pregnancy Dating Calculator",
-  "short_name": "Pregnancy Dates",
-  "description": "Browser-only pregnancy dating, IVF due date, milestone calendar, pregnancy guide, antenatal planning and BMI tools.",
+  "name": "Pregnancy Care Toolkit",
+  "short_name": "Pregnancy Care",
+  "description": "Private, browser-based pregnancy dating, milestones, antenatal planning, personal checklists and obstetric clinical utility tools.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
