@@ -1,6 +1,12 @@
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
+  // Optional UI elements may be absent in stale pages or embedded contexts; never let
+  // one missing control prevent the rest of the toolkit from initializing.
+  const on = (id, eventName, handler, options) => {
+    const element = $(id);
+    if (element) element.addEventListener(eventName, handler, options);
+  };
   const modes = ['usg', 'lmp', 'ga', 'ivf'];
   const Dates = window.PregnancyDates;
   const Calc = window.PregnancyCalculator;
@@ -126,8 +132,8 @@
     });
     $('results').classList.remove('visible');
   }
-  modes.forEach(mode => $('tab-' + mode).addEventListener('click', () => activate(mode)));
-  ['usg', 'lmp', 'ga', 'ivf'].forEach(mode => $('calc-' + mode).addEventListener('click', () => calculate(mode)));
+  modes.forEach(mode => on('tab-' + mode, 'click', () => activate(mode)));
+  ['usg', 'lmp', 'ga', 'ivf'].forEach(mode => on('calc-' + mode, 'click', () => calculate(mode)));
   document.querySelectorAll('[data-reset]').forEach(button => button.addEventListener('click', () => {
     const mode = button.dataset.reset;
     clearError(mode); $('results').classList.remove('visible');
@@ -144,19 +150,19 @@
     next.focus(); next.click();
   }));
   $('theme-toggle').setAttribute('aria-pressed', String(document.body.classList.contains('dark')));
-  $('theme-toggle').addEventListener('click', () => {
+  on('theme-toggle', 'click', () => {
     const enabled = document.body.classList.toggle('dark');
     $('theme-toggle').setAttribute('aria-pressed', String(enabled));
     $('theme-toggle').textContent = enabled ? t('☀ Light mode', '☀ लाइट मोड') : t('☾ Dark mode', '☾ डार्क मोड');
     try { localStorage.setItem('pregnancy-dating-theme', enabled ? 'dark' : 'light'); } catch (_) {}
   });
-  $('language-toggle').addEventListener('click', () => {
+  on('language-toggle', 'click', () => {
     language = language === 'en' ? 'hi' : 'en';
     try { localStorage.setItem('pregnancy-dating-language', language); } catch (_) {}
     applyLanguage();
   });
-  $('print').addEventListener('click', () => window.print());
-  $('copy-results').addEventListener('click', async () => {
+  on('print', 'click', () => window.print());
+  on('copy-results', 'click', async () => {
     const summary = [
       t('Pregnancy Care Toolkit', 'गर्भावस्था देखभाल टूलकिट'),
       t('Estimated LMP: ', 'अनुमानित LMP: ') + $('out-lmp').textContent,
@@ -240,8 +246,8 @@
     $('guide-copy').textContent = content[language === 'hi' ? 'hi' : 'en'];
     $('guide-care').textContent = content[language === 'hi' ? 'careHi' : 'careEn'];
   }
-  $('guide-week').addEventListener('change', updateGuide);
-  $('use-current-week').addEventListener('click', () => {
+  on('guide-week', 'change', updateGuide);
+  on('use-current-week', 'click', () => {
     if (!currentResult) return;
     const ga = Dates.diffDays(Dates.parseISO(todayISO), currentResult.lmp);
     if (ga < 0 || ga > 280) { $('guide-week').value = '40'; }
@@ -249,26 +255,26 @@
     updateGuide();
     $('guide').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-  $('calc-bmi').addEventListener('click', () => {
+  on('calc-bmi', 'click', () => {
     try {
       const bmi = Calc.calculateBMI(Number($('bmi-weight').value), Number($('bmi-height').value));
       $('bmi-result').textContent = t('BMI ' + bmi.bmi + ' · ' + bmi.category, 'BMI ' + bmi.bmi + ' · ' + ({'Underweight':'कम वज़न','Healthy weight':'स्वस्थ वज़न','Overweight':'अधिक वज़न','Obesity':'मोटापा'}[bmi.category] || bmi.category));
     } catch (error) { $('bmi-result').textContent = error.message; }
   });
-  $('calc-interval').addEventListener('click', () => {
+  on('calc-interval', 'click', () => {
     try {
       const days = Calc.dateInterval($('interval-start').value, $('interval-end').value);
       $('interval-result').textContent = t(days + ' elapsed calendar days', days + ' कैलेंडर दिन');
     } catch (error) { $('interval-result').textContent = error.message; }
   });
-  $('calc-ga-check').addEventListener('click', () => {
+  on('calc-ga-check', 'click', () => {
     if (!currentResult) return;
     try {
       const result = Calc.fromLMP(Dates.toISO(currentResult.lmp), $('ga-check-date').value);
       $('ga-check-result').textContent = Dates.formatGA(result.totalDays);
     } catch (error) { $('ga-check-result').textContent = error.message; }
   });
-  $('download-calendar').addEventListener('click', () => {
+  on('download-calendar', 'click', () => {
     if (!currentResult) return;
     const stamp = date => Dates.toISO(date).replace(/-/g, '');
     const escapeICS = value => value.replace(/\\/g, '\\\\').replace(/,/g, '\\,').replace(/;/g, '\\;').replace(/\n/g, '\\n');
