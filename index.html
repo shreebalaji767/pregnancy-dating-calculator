@@ -212,6 +212,23 @@
           <p id="birth-status" class="tool-result" role="status" aria-live="polite"></p>
         </article>
         <article class="tool-card">
+          <h3 data-en="Contraction timer" data-hi="संकुचन टाइमर">Contraction timer</h3>
+          <p class="help" data-en="A simple stopwatch and interval log. Follow your maternity team's advice; do not use this tool to decide whether urgent care is needed." data-hi="एक साधारण स्टॉपवॉच और अंतराल लॉग। अपनी मातृत्व टीम की सलाह मानें; तत्काल देखभाल की ज़रूरत तय करने के लिए इस टूल का उपयोग न करें।">A simple stopwatch and interval log. Follow your maternity team's advice; do not use this tool to decide whether urgent care is needed.</p>
+          <p class="timer-display" id="contraction-clock" role="timer" aria-live="off">00:00</p>
+          <p id="contraction-status" class="tool-result" role="status" aria-live="polite" data-en="Ready when you are." data-hi="तैयार होने पर शुरू करें।">Ready when you are.</p>
+          <div class="actions"><button class="primary" id="contraction-toggle" type="button" data-en="Start contraction" data-hi="संकुचन शुरू करें">Start contraction</button><button class="secondary" id="clear-contractions" type="button" data-en="Clear session" data-hi="सत्र साफ़ करें">Clear session</button><button class="secondary" id="export-contractions" type="button" data-en="Export log (.txt)" data-hi="लॉग निर्यात करें (.txt)">Export log (.txt)</button></div>
+          <p class="help" data-en="The log stays in memory for this page session only and is cleared when you leave or reset it." data-hi="लॉग केवल इस पेज सत्र की मेमोरी में रहता है और पेज छोड़ने या रीसेट करने पर साफ़ हो जाता है।">The log stays in memory for this page session only and is cleared when you leave or reset it.</p>
+          <ol id="contraction-list" class="appointment-list" aria-live="polite"></ol>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Movement session counter" data-hi="बच्चे की हलचल सत्र काउंटर">Movement session counter</h3>
+          <p class="help" data-en="Use only if your maternity team has asked you to track movements and follow their method. There is no single normal count for everyone." data-hi="केवल तभी उपयोग करें जब आपकी मातृत्व टीम ने हलचल गिनने को कहा हो और उनकी विधि अपनाएँ। सभी के लिए एक सामान्य संख्या नहीं होती।">Use only if your maternity team has asked you to track movements and follow their method. There is no single normal count for everyone.</p>
+          <p class="timer-display" id="movement-count" aria-live="polite">0</p>
+          <div class="actions"><button class="primary" id="movement-add" type="button" data-en="Count a movement" data-hi="एक हलचल गिनें">Count a movement</button><button class="secondary" id="movement-reset" type="button" data-en="Reset session" data-hi="सत्र रीसेट करें">Reset session</button><button class="secondary" id="movement-export" type="button" data-en="Export session (.txt)" data-hi="सत्र निर्यात करें (.txt)">Export session (.txt)</button></div>
+          <p class="note small-note" data-en="If movements are reduced, stop or changed from your baby's usual pattern, contact your maternity unit immediately—do not wait for a count or rely on this counter." data-hi="यदि बच्चे की हलचल कम हो, बंद हो या सामान्य पैटर्न बदले, तुरंत मातृत्व इकाई से संपर्क करें—गिनती का इंतज़ार न करें और इस काउंटर पर निर्भर न रहें।">If movements are reduced, stop or changed from your baby's usual pattern, contact your maternity unit immediately—do not wait for a count or rely on this counter.</p>
+          <p class="help" data-en="This session is not saved or uploaded." data-hi="यह सत्र सहेजा या अपलोड नहीं किया जाता।">This session is not saved or uploaded.</p>
+        </article>
+        <article class="tool-card">
           <h3 data-en="Appointment tracker" data-hi="अपॉइंटमेंट ट्रैकर">Appointment tracker</h3>
           <p class="help" data-en="A simple local reminder list. It does not send notifications; check your dates and use your usual calendar if you need alerts." data-hi="एक साधारण स्थानीय सूची। यह नोटिफ़िकेशन नहीं भेजती; अलर्ट चाहिए तो अपना सामान्य कैलेंडर उपयोग करें।">A simple local reminder list. It does not send notifications; check your dates and use your usual calendar if you need alerts.</p>
           <div class="field"><label for="appt-title" data-en="Appointment / task" data-hi="अपॉइंटमेंट / कार्य">Appointment / task</label><input id="appt-title" type="text" maxlength="120" autocomplete="off" placeholder="e.g. Follow-up visit"></div>
