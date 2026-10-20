@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#c64f83">
+  <meta name="theme-color" content="#155e75">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -11,83 +11,177 @@
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/icons/logo.svg">
   <link rel="manifest" href="manifest.webmanifest">
-  <meta name="description" content="A browser-based pregnancy dating calculator for estimating LMP, EDD, gestational age, and trimester from ultrasound or LMP.">
-  <title>Pregnancy Dating Calculator | Clinical Utility</title>
+  <meta name="description" content="Browser-based pregnancy dating, IVF due date, milestone, antenatal planning and BMI tools. No patient data is uploaded.">
+  <title>Pregnancy Care Toolkit | Clinical Calculator</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <script defer src="assets/js/date-utils.js"></script>
   <script defer src="assets/js/calculator.js"></script>
   <script defer src="assets/js/app.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content" data-en="Skip to main content" data-hi="मुख्य सामग्री पर जाएँ">Skip to main content</a>
   <header class="site-header">
     <div class="header-inner">
-      <div class="header-tools"><button class="header-button install-button" id="install-app" type="button">＋ Install app</button><button class="header-button" id="theme-toggle" type="button" aria-pressed="false">☾ Dark mode</button></div>
-      <div class="brand-lockup"><img class="brand-logo" src="assets/icons/logo.svg" width="64" height="64" alt="Pregnancy Dating Calculator logo"><div><div class="eyebrow">A thoughtful clinical utility</div><h1>Pregnancy Dating Calculator</h1></div></div>
-      <p class="subtitle">Simple, clear estimates for gestational age, last menstrual period, and estimated due date—all in one place.</p>
+      <div class="header-tools">
+        <button class="header-button" id="language-toggle" type="button" aria-label="Switch language">हिंदी</button>
+        <button class="header-button" id="install-app" type="button">＋ Install app</button>
+        <button class="header-button" id="theme-toggle" type="button" aria-pressed="false">☾ Dark mode</button>
+      </div>
+      <div class="brand-lockup">
+        <img class="brand-logo" src="assets/icons/logo.svg" width="60" height="60" alt="Pregnancy Care Toolkit logo">
+        <div><div class="eyebrow" data-en="OBSTETRIC CLINICAL UTILITY" data-hi="प्रसूति क्लिनिकल टूल">OBSTETRIC CLINICAL UTILITY</div><h1 data-en="Pregnancy Care Toolkit" data-hi="गर्भावस्था देखभाल टूलकिट">Pregnancy Care Toolkit</h1></div>
+      </div>
+      <p class="subtitle" data-en="Pregnancy dating, milestones and practical planning tools — designed for clarity, privacy and clinical review." data-hi="गर्भावस्था की तारीख़, पड़ाव और योजना के टूल — स्पष्टता, गोपनीयता और चिकित्सकीय समीक्षा के लिए।">Pregnancy dating, milestones and practical planning tools — designed for clarity, privacy and clinical review.</p>
       <p id="install-status" class="install-status" role="status" aria-live="polite"></p>
-      <div class="header-chip"><span aria-hidden="true">♡</span> Private by design · No patient data is uploaded</div>
+      <div class="header-chip"><span aria-hidden="true">✓</span><span data-en="Browser-only calculations · No patient database" data-hi="ब्राउज़र में गणना · मरीज़ का डेटाबेस नहीं">Browser-only calculations · No patient database</span></div>
     </div>
   </header>
-  <main>
-    <section class="card" aria-label="Pregnancy dating tools">
-      <div class="tabs" role="tablist" aria-label="Choose calculator method">
-        <button class="tab" id="tab-usg" role="tab" aria-selected="true" aria-controls="panel-usg" type="button"><span class="tab-number">01</span>USG → LMP / EDD</button>
-        <button class="tab" id="tab-lmp" role="tab" aria-selected="false" aria-controls="panel-lmp" tabindex="-1" type="button"><span class="tab-number">02</span>LMP → GA / EDD</button>
-        <button class="tab" id="tab-ga" role="tab" aria-selected="false" aria-controls="panel-ga" tabindex="-1" type="button"><span class="tab-number">03</span>Date + GA → LMP / EDD</button>
+
+  <main id="main-content">
+    <nav class="section-nav" aria-label="Toolkit sections">
+      <a href="#dating" data-en="Dating" data-hi="गर्भावस्था अवधि">Dating</a>
+      <a href="#milestones" data-en="Milestones" data-hi="पड़ाव">Milestones</a>
+      <a href="#guide" data-en="Week guide" data-hi="सप्ताह गाइड">Week guide</a>
+      <a href="#planner" data-en="Visit planner" data-hi="जाँच योजना">Visit planner</a>
+      <a href="#calculators" data-en="Other calculators" data-hi="अन्य कैलकुलेटर">Other calculators</a>
+    </nav>
+
+    <section class="card" id="dating" aria-labelledby="dating-title">
+      <div class="section-heading">
+        <div><p class="kicker" data-en="01 / PREGNANCY DATING" data-hi="01 / गर्भावस्था अवधि">01 / PREGNANCY DATING</p><h2 id="dating-title" data-en="Calculate pregnancy dates" data-hi="गर्भावस्था की तारीख़ें निकालें">Calculate pregnancy dates</h2></div>
+        <span class="section-mark" aria-hidden="true">01</span>
+      </div>
+      <p class="help" data-en="Choose the dating basis shown on your records. Results are estimates and should be reconciled with the clinician's established EDD." data-hi="अपने रिकॉर्ड में दी गई तारीख़ का आधार चुनें। परिणाम अनुमान हैं; चिकित्सक द्वारा तय EDD से मिलान करें।">Choose the dating basis shown on your records. Results are estimates and should be reconciled with the clinician's established EDD.</p>
+      <div class="tabs" role="tablist" aria-label="Choose pregnancy dating method">
+        <button class="tab" id="tab-usg" role="tab" aria-selected="true" aria-controls="panel-usg" type="button" data-en="Ultrasound" data-hi="अल्ट्रासाउंड">Ultrasound</button>
+        <button class="tab" id="tab-lmp" role="tab" aria-selected="false" aria-controls="panel-lmp" tabindex="-1" type="button" data-en="Last period (LMP)" data-hi="अंतिम माहवारी (LMP)">Last period (LMP)</button>
+        <button class="tab" id="tab-ga" role="tab" aria-selected="false" aria-controls="panel-ga" tabindex="-1" type="button" data-en="Date + gestational age" data-hi="तारीख़ + गर्भावधि">Date + gestational age</button>
+        <button class="tab" id="tab-ivf" role="tab" aria-selected="false" aria-controls="panel-ivf" tabindex="-1" type="button" data-en="IVF transfer" data-hi="IVF ट्रांसफर">IVF transfer</button>
       </div>
       <div id="panel-usg" role="tabpanel" aria-labelledby="tab-usg">
-        <h2>Calculate from ultrasound</h2>
-        <p class="help">Enter the scan date and gestational age reported on the ultrasound.</p>
+        <h3 data-en="From ultrasound" data-hi="अल्ट्रासाउंड से">From ultrasound</h3>
+        <p class="help" data-en="Enter the scan date and the gestational age printed on the report." data-hi="स्कैन की तारीख़ और रिपोर्ट में लिखी गर्भावधि दर्ज करें।">Enter the scan date and the gestational age printed on the report.</p>
         <div class="form-grid">
-          <div class="field"><label for="usg-date">USG date</label><input type="date" id="usg-date" required></div>
-          <div class="field"><label for="usg-weeks">Gestational age (whole weeks)</label><input type="number" id="usg-weeks" min="0" max="45" step="1" inputmode="numeric" placeholder="e.g. 36"></div>
-          <div class="field"><label for="usg-days">Additional days</label><select id="usg-days"><option value="0">0 days</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select><span class="hint">Example: 36 weeks 5 days is written 36+5.</span></div>
+          <div class="field"><label for="usg-date" data-en="Ultrasound date" data-hi="अल्ट्रासाउंड की तारीख़">Ultrasound date</label><input type="date" id="usg-date" required></div>
+          <div class="field"><label for="usg-weeks" data-en="Completed weeks" data-hi="पूरे सप्ताह">Completed weeks</label><input type="number" id="usg-weeks" min="0" max="45" step="1" inputmode="numeric" placeholder="e.g. 12"></div>
+          <div class="field"><label for="usg-days" data-en="Additional days" data-hi="अतिरिक्त दिन">Additional days</label><select id="usg-days"><option value="0">0 days</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select></div>
         </div>
-        <div class="actions"><button class="primary" id="calc-usg" type="button">Calculate dates</button><button class="secondary" data-reset="usg" type="button">Clear</button></div>
-        <div class="error" id="err-usg" role="alert"></div>
+        <div class="actions"><button class="primary" id="calc-usg" type="button" data-en="Calculate dates" data-hi="तारीख़ें निकालें">Calculate dates</button><button class="secondary" data-reset="usg" type="button" data-en="Clear" data-hi="साफ़ करें">Clear</button></div><p class="error" id="err-usg" role="alert"></p>
       </div>
       <div id="panel-lmp" role="tabpanel" aria-labelledby="tab-lmp" class="hidden">
-        <h2>Calculate from LMP</h2>
-        <p class="help">Gestational age is elapsed calendar days from the first day of the last menstrual period to your chosen date.</p>
+        <h3 data-en="From last menstrual period" data-hi="अंतिम माहवारी से">From last menstrual period</h3>
+        <p class="help" data-en="Use the first day of the last menstrual period (LMP)." data-hi="अंतिम माहवारी (LMP) के पहले दिन का उपयोग करें।">Use the first day of the last menstrual period (LMP).</p>
         <div class="form-grid">
-          <div class="field"><label for="lmp-date">First day of LMP</label><input type="date" id="lmp-date" required></div>
-          <div class="field"><label for="ref-date">Calculate gestational age on</label><input type="date" id="ref-date" required></div>
+          <div class="field"><label for="lmp-date" data-en="First day of LMP" data-hi="LMP का पहला दिन">First day of LMP</label><input type="date" id="lmp-date" required></div>
+          <div class="field"><label for="ref-date" data-en="Calculate age on" data-hi="इस तारीख़ पर अवधि">Calculate age on</label><input type="date" id="ref-date" required></div>
         </div>
-        <div class="actions"><button class="primary" id="calc-lmp" type="button">Calculate dates</button><button class="secondary" data-reset="lmp" type="button">Clear</button></div>
-        <div class="error" id="err-lmp" role="alert"></div>
+        <div class="actions"><button class="primary" id="calc-lmp" type="button" data-en="Calculate dates" data-hi="तारीख़ें निकालें">Calculate dates</button><button class="secondary" data-reset="lmp" type="button" data-en="Clear" data-hi="साफ़ करें">Clear</button></div><p class="error" id="err-lmp" role="alert"></p>
       </div>
       <div id="panel-ga" role="tabpanel" aria-labelledby="tab-ga" class="hidden">
-        <h2>Calculate from date and gestational age</h2>
-        <p class="help">Use when a report gives a reference date and gestational age, for example 37 weeks 6 days.</p>
+        <h3 data-en="From a reference date and gestational age" data-hi="संदर्भ तारीख़ और गर्भावधि से">From a reference date and gestational age</h3>
         <div class="form-grid">
-          <div class="field"><label for="ga-date">Reference date (e.g. USG date)</label><input type="date" id="ga-date" required></div>
-          <div class="field"><label for="ga-weeks">Gestational age (whole weeks)</label><input type="number" id="ga-weeks" min="0" max="45" step="1" inputmode="numeric" placeholder="e.g. 37"></div>
-          <div class="field"><label for="ga-days">Additional days</label><select id="ga-days"><option value="0">0 days</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select></div>
+          <div class="field"><label for="ga-date" data-en="Reference date" data-hi="संदर्भ तारीख़">Reference date</label><input type="date" id="ga-date" required></div>
+          <div class="field"><label for="ga-weeks" data-en="Completed weeks" data-hi="पूरे सप्ताह">Completed weeks</label><input type="number" id="ga-weeks" min="0" max="45" step="1" inputmode="numeric" placeholder="e.g. 28"></div>
+          <div class="field"><label for="ga-days" data-en="Additional days" data-hi="अतिरिक्त दिन">Additional days</label><select id="ga-days"><option value="0">0 days</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select></div>
         </div>
-        <div class="actions"><button class="primary" id="calc-ga" type="button">Calculate dates</button><button class="secondary" data-reset="ga" type="button">Clear</button></div>
-        <div class="error" id="err-ga" role="alert"></div>
+        <div class="actions"><button class="primary" id="calc-ga" type="button" data-en="Calculate dates" data-hi="तारीख़ें निकालें">Calculate dates</button><button class="secondary" data-reset="ga" type="button" data-en="Clear" data-hi="साफ़ करें">Clear</button></div><p class="error" id="err-ga" role="alert"></p>
       </div>
-      <section class="results" id="results" aria-live="polite" aria-atomic="true" aria-label="Calculated results">
-        <div class="result-head"><h2>Calculated results</h2><div class="actions" style="margin:0"><button class="secondary" id="copy-results" type="button">Copy summary</button><button class="secondary" id="print" type="button">Print</button></div></div>
-        <div class="result-grid">
-          <div class="metric"><span>Estimated LMP</span><strong id="out-lmp">—</strong><small id="out-lmp-note"></small></div>
-          <div class="metric"><span>Estimated due date (EDD)</span><strong id="out-edd">—</strong><small>40 weeks from estimated LMP</small></div>
-          <div class="metric"><span>Gestational age on reference date</span><strong id="out-ga">—</strong><small id="out-ga-note"></small></div>
-          <div class="metric"><span>Trimester</span><strong id="out-trimester">—</strong><small id="out-trimester-note">Based on gestational age</small></div>
-          <div class="metric"><span>Time until EDD</span><strong id="out-remaining">—</strong><small id="out-remaining-note">Relative to reference date</small></div>
+      <div id="panel-ivf" role="tabpanel" aria-labelledby="tab-ivf" class="hidden">
+        <h3 data-en="From embryo transfer" data-hi="भ्रूण ट्रांसफर से">From embryo transfer</h3>
+        <p class="help" data-en="For IVF pregnancies, use the transfer date and embryo age supplied by the fertility clinic." data-hi="IVF गर्भावस्था के लिए फर्टिलिटी क्लिनिक द्वारा दी गई ट्रांसफर तारीख़ और भ्रूण की उम्र दर्ज करें।">For IVF pregnancies, use the transfer date and embryo age supplied by the fertility clinic.</p>
+        <div class="form-grid">
+          <div class="field"><label for="ivf-date" data-en="Embryo transfer date" data-hi="भ्रूण ट्रांसफर की तारीख़">Embryo transfer date</label><input type="date" id="ivf-date" required></div>
+          <div class="field"><label for="ivf-age" data-en="Embryo age at transfer" data-hi="ट्रांसफर के समय भ्रूण की उम्र">Embryo age at transfer</label><select id="ivf-age"><option value="5">Day 5 blastocyst</option><option value="3">Day 3 embryo</option></select></div>
         </div>
-        <div class="progress-wrap" style="margin-top:18px">
-          <div style="display:flex;justify-content:space-between;gap:10px;font-size:.88rem;margin-bottom:8px"><strong>Pregnancy timeline</strong><span id="out-progress-label">—</span></div>
+        <div class="actions"><button class="primary" id="calc-ivf" type="button" data-en="Calculate IVF dates" data-hi="IVF तारीख़ें निकालें">Calculate IVF dates</button><button class="secondary" data-reset="ivf" type="button" data-en="Clear" data-hi="साफ़ करें">Clear</button></div><p class="error" id="err-ivf" role="alert"></p>
+        <p class="hint" data-en="IVF dating formula: EDD is 261 days after a day-5 transfer or 263 days after a day-3 transfer. Confirm with the treating fertility team." data-hi="IVF सूत्र: day-5 ट्रांसफर के 261 दिन बाद या day-3 ट्रांसफर के 263 दिन बाद अनुमानित EDD होती है। फर्टिलिटी टीम से पुष्टि करें।">IVF dating formula: EDD is 261 days after a day-5 transfer or 263 days after a day-3 transfer. Confirm with the treating fertility team.</p>
+      </div>
+
+      <section class="results" id="results" aria-live="polite" aria-atomic="true" aria-labelledby="results-title">
+        <div class="result-head"><div><p class="kicker" data-en="ESTIMATE SUMMARY" data-hi="अनुमान सारांश">ESTIMATE SUMMARY</p><h3 id="results-title" data-en="Calculated results" data-hi="गणना के परिणाम">Calculated results</h3></div><div class="actions compact-actions"><button class="secondary" id="copy-results" type="button" data-en="Copy summary" data-hi="सारांश कॉपी करें">Copy summary</button><button class="primary" id="print" type="button" data-en="Print / Save PDF" data-hi="प्रिंट / PDF सेव करें">Print / Save PDF</button></div></div>
+        <div class="result-grid">
+          <div class="metric"><span data-en="Estimated LMP" data-hi="अनुमानित LMP">Estimated LMP</span><strong id="out-lmp">—</strong><small id="out-lmp-note"></small></div>
+          <div class="metric"><span data-en="Estimated due date (EDD)" data-hi="अनुमानित प्रसव तारीख़ (EDD)">Estimated due date (EDD)</span><strong id="out-edd">—</strong><small data-en="40 weeks from estimated LMP" data-hi="अनुमानित LMP से 40 सप्ताह">40 weeks from estimated LMP</small></div>
+          <div class="metric"><span data-en="Gestational age" data-hi="गर्भावधि">Gestational age</span><strong id="out-ga">—</strong><small id="out-ga-note"></small></div>
+          <div class="metric"><span data-en="Trimester" data-hi="तिमाही">Trimester</span><strong id="out-trimester">—</strong><small id="out-trimester-note"></small></div>
+          <div class="metric"><span data-en="Time until EDD" data-hi="EDD तक समय">Time until EDD</span><strong id="out-remaining">—</strong><small id="out-remaining-note"></small></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><strong data-en="Pregnancy timeline" data-hi="गर्भावस्था समयरेखा">Pregnancy timeline</strong><span id="out-progress-label">—</span></div>
           <div class="progress-track" id="progress-track" role="progressbar" aria-label="Estimated pregnancy timeline" aria-valuemin="0" aria-valuemax="280" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
           <p id="out-milestone" class="hint"></p>
         </div>
-        <p id="out-reference" class="hint"></p>
-        <div id="copy-status" class="hint" role="status" aria-live="polite"></div>
+        <p id="out-reference" class="hint"></p><p id="copy-status" class="hint" role="status" aria-live="polite"></p>
       </section>
-      <div class="note"><strong>Clinical note:</strong> These are calendar-based estimates, not a substitute for clinical assessment. Confirm the dating basis and follow local obstetric guidance. Ultrasound dating accuracy depends on gestational age and the report's dating method. 37+6 means 37 weeks 6 days; it is not the same as 37.6 decimal weeks.</div>
-      <div class="privacy-strip"><span aria-hidden="true">♡</span><span><strong>Privacy first.</strong> Calculations run locally in your browser. Dates are not sent to a database by this website. Avoid entering identifiable patient information on a public computer.</span></div>
+      <div class="note"><strong data-en="Clinical safety note" data-hi="चिकित्सकीय सावधानी">Clinical safety note</strong><span data-en=" These are calendar-based estimates, not a diagnosis or a substitute for clinician-confirmed dating. Use the established obstetric EDD where available. Do not change a documented EDD without clinical review." data-hi=" ये कैलेंडर-आधारित अनुमान हैं, निदान या चिकित्सक द्वारा पुष्टि की गई तारीख़ का विकल्प नहीं। उपलब्ध होने पर स्थापित प्रसूति EDD का उपयोग करें। चिकित्सकीय समीक्षा के बिना दर्ज EDD न बदलें।"> These are calendar-based estimates, not a diagnosis or a substitute for clinician-confirmed dating. Use the established obstetric EDD where available. Do not change a documented EDD without clinical review.</span></div>
+    </section>
+
+    <section class="card" id="milestones" aria-labelledby="milestones-title">
+      <div class="section-heading"><div><p class="kicker" data-en="02 / KEY DATES" data-hi="02 / महत्वपूर्ण तारीख़ें">02 / KEY DATES</p><h2 id="milestones-title" data-en="Pregnancy milestone calendar" data-hi="गर्भावस्था पड़ाव कैलेंडर">Pregnancy milestone calendar</h2></div><span class="section-mark" aria-hidden="true">02</span></div>
+      <p class="help" data-en="Calculate a dating method above to populate milestone dates from the estimated LMP. These are planning markers, not mandatory appointments." data-hi="पड़ाव की तारीख़ें देखने के लिए ऊपर गणना करें। ये योजना के संकेत हैं, अनिवार्य अपॉइंटमेंट नहीं।">Calculate a dating method above to populate milestone dates from the estimated LMP. These are planning markers, not mandatory appointments.</p>
+      <div id="milestone-empty" class="empty-state" data-en="Your milestone dates will appear after you calculate pregnancy dates." data-hi="गर्भावस्था की तारीख़ें निकालने के बाद पड़ाव दिखाई देंगे।">Your milestone dates will appear after you calculate pregnancy dates.</div>
+      <ol id="milestone-list" class="timeline-list" aria-live="polite"></ol>
+      <button class="secondary" id="download-calendar" type="button" disabled data-en="Download calendar (.ics)" data-hi="कैलेंडर डाउनलोड करें (.ics)">Download calendar (.ics)</button>
+      <p class="hint" data-en="Calendar file contains date reminders only. It is generated locally and does not upload any data." data-hi="कैलेंडर फ़ाइल में केवल तारीख़ रिमाइंडर हैं। यह स्थानीय रूप से बनती है; डेटा अपलोड नहीं होता।">Calendar file contains date reminders only. It is generated locally and does not upload any data.</p>
+    </section>
+
+    <section class="card" id="guide" aria-labelledby="guide-title">
+      <div class="section-heading"><div><p class="kicker" data-en="03 / EDUCATION" data-hi="03 / जानकारी">03 / EDUCATION</p><h2 id="guide-title" data-en="Week-by-week pregnancy guide" data-hi="सप्ताह-दर-सप्ताह गर्भावस्था गाइड">Week-by-week pregnancy guide</h2></div><span class="section-mark" aria-hidden="true">03</span></div>
+      <p class="help" data-en="A brief, general overview. Individual development and symptoms vary; this guide cannot assess fetal growth or health." data-hi="संक्षिप्त सामान्य जानकारी। विकास और लक्षण अलग-अलग हो सकते हैं; यह गाइड भ्रूण की वृद्धि या स्वास्थ्य का आकलन नहीं करती।">A brief, general overview. Individual development and symptoms vary; this guide cannot assess fetal growth or health.</p>
+      <div class="guide-controls"><div class="field"><label for="guide-week" data-en="Select pregnancy week" data-hi="गर्भावस्था सप्ताह चुनें">Select pregnancy week</label><select id="guide-week"></select></div><button class="secondary" id="use-current-week" type="button" disabled data-en="Use calculated week" data-hi="गणना किया सप्ताह चुनें">Use calculated week</button></div>
+      <article class="guide-panel" aria-live="polite"><p class="kicker" id="guide-trimester">WEEK 1</p><h3 id="guide-heading">Pregnancy week overview</h3><p id="guide-copy">Choose a week to see a general overview.</p><p class="hint" id="guide-care"></p></article>
+    </section>
+
+    <section class="card" id="planner" aria-labelledby="planner-title">
+      <div class="section-heading"><div><p class="kicker" data-en="04 / PRENATAL CARE" data-hi="04 / प्रसवपूर्व देखभाल">04 / PRENATAL CARE</p><h2 id="planner-title" data-en="Antenatal visit planner" data-hi="प्रसवपूर्व जाँच योजना">Antenatal visit planner</h2></div><span class="section-mark" aria-hidden="true">04</span></div>
+      <p class="help" data-en="Example planning windows only. The treating clinician should customize this schedule to local guidance, pregnancy history and clinical needs." data-hi="ये केवल उदाहरण योजना-अवधियाँ हैं। चिकित्सक स्थानीय दिशानिर्देश, गर्भावस्था इतिहास और ज़रूरत के अनुसार योजना तय करें।">Example planning windows only. The treating clinician should customize this schedule to local guidance, pregnancy history and clinical needs.</p>
+      <div id="planner-empty" class="empty-state" data-en="Calculate an estimated due date to see suggested planning windows." data-hi="योजना की अनुमानित तारीख़ें देखने के लिए EDD निकालें।">Calculate an estimated due date to see suggested planning windows.</div>
+      <div id="planner-list" class="planner-list" aria-live="polite"></div>
+      <p class="note small-note" data-en="This is not a clinical protocol and does not replace local antenatal guidance. Tests and visit frequency vary by country, facility and individual risk." data-hi="यह क्लिनिकल प्रोटोकॉल नहीं है और स्थानीय प्रसवपूर्व दिशानिर्देशों का विकल्प नहीं। जाँच और मुलाक़ात की आवृत्ति स्थान और व्यक्तिगत जोखिम पर निर्भर करती है।">This is not a clinical protocol and does not replace local antenatal guidance. Tests and visit frequency vary by country, facility and individual risk.</p>
+    </section>
+
+    <section class="card" id="calculators" aria-labelledby="calculators-title">
+      <div class="section-heading"><div><p class="kicker" data-en="05 / CLINICAL UTILITIES" data-hi="05 / क्लिनिकल उपयोग">05 / CLINICAL UTILITIES</p><h2 id="calculators-title" data-en="Additional calculators" data-hi="अतिरिक्त कैलकुलेटर">Additional calculators</h2></div><span class="section-mark" aria-hidden="true">05</span></div>
+      <div class="tool-grid">
+        <article class="tool-card">
+          <h3 data-en="Body mass index (BMI)" data-hi="बॉडी मास इंडेक्स (BMI)">Body mass index (BMI)</h3>
+          <p class="help" data-en="Use adult BMI categories only as a screening aid. For pregnancy planning, pre-pregnancy BMI is usually the relevant baseline." data-hi="वयस्क BMI श्रेणियाँ केवल स्क्रीनिंग के लिए हैं। गर्भावस्था योजना में गर्भधारण-पूर्व BMI उपयोगी आधार हो सकता है।">Use adult BMI categories only as a screening aid. For pregnancy planning, pre-pregnancy BMI is usually the relevant baseline.</p>
+          <div class="field"><label for="bmi-weight" data-en="Weight (kg)" data-hi="वज़न (किग्रा)">Weight (kg)</label><input id="bmi-weight" type="number" min="1" max="500" step="0.1" inputmode="decimal" placeholder="e.g. 62"></div>
+          <div class="field"><label for="bmi-height" data-en="Height (cm)" data-hi="लंबाई (सेमी)">Height (cm)</label><input id="bmi-height" type="number" min="50" max="250" step="0.1" inputmode="decimal" placeholder="e.g. 160"></div>
+          <button class="primary" id="calc-bmi" type="button" data-en="Calculate BMI" data-hi="BMI निकालें">Calculate BMI</button>
+          <p id="bmi-result" class="tool-result" role="status" aria-live="polite"></p>
+          <p class="hint" data-en="Formula: weight (kg) ÷ height (m)². BMI is not a diagnosis; pregnancy weight should not be interpreted using adult BMI categories alone." data-hi="सूत्र: वज़न (किग्रा) ÷ लंबाई (मीटर)²। BMI निदान नहीं है; गर्भावस्था के वज़न का आकलन केवल वयस्क BMI से न करें।">Formula: weight (kg) ÷ height (m)². BMI is not a diagnosis; pregnancy weight should not be interpreted using adult BMI categories alone.</p>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Date interval calculator" data-hi="तारीख़ अंतर कैलकुलेटर">Date interval calculator</h3>
+          <p class="help" data-en="Count elapsed calendar days between two dates." data-hi="दो तारीख़ों के बीच बीते कैलेंडर दिन गिनें।">Count elapsed calendar days between two dates.</p>
+          <div class="field"><label for="interval-start" data-en="Start date" data-hi="शुरुआती तारीख़">Start date</label><input id="interval-start" type="date"></div>
+          <div class="field"><label for="interval-end" data-en="End date" data-hi="अंतिम तारीख़">End date</label><input id="interval-end" type="date"></div>
+          <button class="primary" id="calc-interval" type="button" data-en="Calculate interval" data-hi="अंतर निकालें">Calculate interval</button>
+          <p id="interval-result" class="tool-result" role="status" aria-live="polite"></p>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Gestational age on a date" data-hi="किसी तारीख़ पर गर्भावधि">Gestational age on a date</h3>
+          <p class="help" data-en="Use the LMP estimated by the dating calculator above." data-hi="ऊपर कैलकुलेटर से निकाली गई LMP का उपयोग करें।">Use the LMP estimated by the dating calculator above.</p>
+          <div class="field"><label for="ga-check-date" data-en="Date to check" data-hi="जाँच की तारीख़">Date to check</label><input id="ga-check-date" type="date"></div>
+          <button class="primary" id="calc-ga-check" type="button" disabled data-en="Calculate gestational age" data-hi="गर्भावधि निकालें">Calculate gestational age</button>
+          <p id="ga-check-result" class="tool-result" role="status" aria-live="polite"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card privacy-card" id="privacy" aria-labelledby="privacy-title">
+      <div class="section-heading"><div><p class="kicker" data-en="PRIVACY & ACCESSIBILITY" data-hi="गोपनीयता और सुलभता">PRIVACY & ACCESSIBILITY</p><h2 id="privacy-title" data-en="Designed to minimize data exposure" data-hi="डेटा गोपनीयता को ध्यान में रखकर बनाया गया">Designed to minimize data exposure</h2></div></div>
+      <ul class="privacy-list">
+        <li data-en="Calculations run in this browser; there is no patient database or account." data-hi="गणना इसी ब्राउज़र में होती है; मरीज़ का डेटाबेस या खाता नहीं है।">Calculations run in this browser; there is no patient database or account.</li>
+        <li data-en="No patient name, phone number or medical record number is needed." data-hi="मरीज़ का नाम, फ़ोन नंबर या मेडिकल रिकॉर्ड नंबर आवश्यक नहीं है।">No patient name, phone number or medical record number is needed.</li>
+        <li data-en="Calendar downloads and print/PDF are generated on your device." data-hi="कैलेंडर डाउनलोड और प्रिंट/PDF आपके डिवाइस पर बनते हैं।">Calendar downloads and print/PDF are generated on your device.</li>
+        <li data-en="Use keyboard navigation, visible focus indicators and reduced-motion settings." data-hi="कीबोर्ड नेविगेशन, स्पष्ट फ़ोकस संकेत और कम-एनिमेशन सेटिंग उपलब्ध हैं।">Use keyboard navigation, visible focus indicators and reduced-motion settings.</li>
+      </ul>
+      <p class="note"><strong data-en="Medical disclaimer" data-hi="चिकित्सकीय अस्वीकरण">Medical disclaimer</strong><span data-en=" This educational tool does not provide diagnosis or treatment advice. Dating, screening and antenatal plans must be confirmed by a qualified clinician using current local guidance. Seek urgent medical care for urgent symptoms." data-hi=" यह शैक्षिक टूल निदान या उपचार सलाह नहीं देता। तारीख़, स्क्रीनिंग और प्रसवपूर्व योजना की पुष्टि योग्य चिकित्सक द्वारा वर्तमान स्थानीय दिशानिर्देशों के अनुसार करें। गंभीर लक्षणों में तुरंत चिकित्सा सहायता लें।"> This educational tool does not provide diagnosis or treatment advice. Dating, screening and antenatal plans must be confirmed by a qualified clinician using current local guidance. Seek urgent medical care for urgent symptoms.</span></p>
+      <p class="sources">Clinical references: <a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date" target="_blank" rel="noopener noreferrer">ACOG: Methods for Estimating the Due Date</a> · <a href="https://www.cdc.gov/bmi/about/" target="_blank" rel="noopener noreferrer">CDC: About BMI</a> · <a href="https://www.nhs.uk/pregnancy/your-pregnancy-care/your-antenatal-care-and-appointments/" target="_blank" rel="noopener noreferrer">NHS: Antenatal care</a></p>
     </section>
   </main>
-  <footer class="site-footer">Pregnancy Dating Calculator · For estimation and educational support only. Clinical decisions should be based on the complete clinical picture and qualified professional guidance.</footer>
+  <footer class="site-footer"><span data-en="Pregnancy Care Toolkit · Browser-only estimates · Not a substitute for clinician assessment" data-hi="गर्भावस्था देखभाल टूलकिट · ब्राउज़र में अनुमान · चिकित्सकीय मूल्यांकन का विकल्प नहीं">Pregnancy Care Toolkit · Browser-only estimates · Not a substitute for clinician assessment</span><span id="app-version">Version 2.0</span></footer>
 </body>
 </html>
