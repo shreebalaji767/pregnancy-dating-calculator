@@ -17,5 +17,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Run calculator and site checks
-        run: node --check assets/js/app.js && node --check assets/js/calculator.js && node --check assets/js/date-utils.js && node --test
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/js/date-utils.js
+          node --check assets/js/calculator.js
+          node --check assets/js/app.js
+          node --check assets/js/clinical-tools.js
+      - name: Run calculator and site integrity tests
+        run: node --test tests/*.test.cjs
