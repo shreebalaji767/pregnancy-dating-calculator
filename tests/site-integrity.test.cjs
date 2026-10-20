@@ -72,8 +72,17 @@ test('section navigation has an accessible active-state implementation', () => {
 
 test('service worker cache version is bumped and all core scripts are precached', () => {
   const worker = read('service-worker.js');
-  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v15'/);
+  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v16'/);
   for (const asset of ['./assets/css/style.css', './assets/js/date-utils.js', './assets/js/calculator.js', './assets/js/app.js', './assets/js/clinical-tools.js']) {
     assert.ok(worker.includes(asset), 'Missing core precache asset: ' + asset);
   }
+});
+
+test('installed app manifest uses the current toolkit name and local entry point', () => {
+  const manifest = JSON.parse(read('manifest.webmanifest'));
+  assert.equal(manifest.name, 'Pregnancy Care Toolkit');
+  assert.equal(manifest.short_name, 'Pregnancy Care');
+  assert.equal(manifest.start_url, './');
+  assert.equal(manifest.scope, './');
+  assert.ok(manifest.description.includes('browser-based'));
 });
