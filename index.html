@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<meta name="description" content="A browser-based pregnancy dating calculator for estimating LMP, EDD, and gestational age from ultrasound or a known LMP.">
+<title>Pregnancy Dating Calculator</title>
+<style>
+:root{color-scheme:light;--ink:#172b3a;--muted:#617181;--line:#dce5e9;--teal:#0f766e;--deep:#164e63;--bg:#f4f8f8;--card:#fff;--soft:#e9f5f3;--warn:#fff7e6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,var(--teal),var(--deep));color:#fff;padding:34px 20px 60px}.head{max-width:980px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.75rem;font-weight:750;opacity:.9}h1{font-size:clamp(1.9rem,4vw,2.65rem);line-height:1.1;margin:.55rem 0}.sub{max-width:700px;color:#e2f3f1;margin:0}
+main{max-width:980px;margin:-34px auto 40px;padding:0 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,28px);box-shadow:0 12px 35px #1232}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tab{border:1px solid var(--line);border-radius:999px;padding:10px 15px;background:#fff;color:var(--ink);font:inherit;font-weight:650;cursor:pointer}.tab[aria-selected=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+h2{font-size:1.25rem;margin:0 0 6px}.help{color:var(--muted);margin:0 0 22px;font-size:.94rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label{font-weight:650;font-size:.93rem}input,select{font:inherit;border:1px solid #c8d5db;border-radius:10px;padding:12px 13px;min-width:0;width:100%;background:#fff;color:var(--ink)}input:focus,select:focus,button:focus-visible{outline:3px solid #5eead4;outline-offset:2px}.hint{font-size:.82rem;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.primary,.secondary{border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--teal);color:#fff}.primary:hover{background:#115e59}.secondary{background:#edf2f4;color:var(--ink)}.error{color:#a32121;font-weight:650;margin-top:14px}.results{margin-top:24px;display:none}.results.visible{display:block}.result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{background:var(--soft);border-radius:12px;padding:16px;min-width:0}.metric span{display:block;color:#3e6663;font-size:.82rem;font-weight:650}.metric strong{display:block;font-size:clamp(1.05rem,2.4vw,1.35rem);margin-top:5px;overflow-wrap:anywhere}.metric small{display:block;color:#3e6663;margin-top:3px}.note{margin-top:22px;border-radius:12px;background:var(--warn);padding:14px 16px;font-size:.88rem;color:#634a18}.foot{max-width:980px;margin:0 auto;padding:0 20px 28px;color:var(--muted);font-size:.84rem}.hidden{display:none!important}
+@media(max-width:620px){header{padding:26px 18px 54px}.grid,.result-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{border-radius:15px}.tabs{display:grid;grid-template-columns:1fr}.tab{text-align:left}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+@media print{body{background:white}header{background:white;color:black;padding:0 0 20px}.sub{color:#333}main{margin:0 auto}.card{box-shadow:none;border:0;padding:0}.tabs,.actions,.note,.foot{display:none!important}.results{display:block}.metric{border:1px solid #ddd;background:white}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="eyebrow">Clinical utility · runs locally</div><h1>Pregnancy Dating Calculator</h1><p class="sub">Estimate LMP, estimated due date (EDD), and gestational age from ultrasound dating or a known LMP. No account, database, or server required.</p></div></header>
+<main><section class="card" aria-label="Pregnancy dating tools">
+<div class="tabs" role="tablist" aria-label="Calculator type">
+<button class="tab" id="tab-usg" role="tab" aria-selected="true" aria-controls="panel-usg">USG → LMP / EDD</button>
+<button class="tab" id="tab-lmp" role="tab" aria-selected="false" aria-controls="panel-lmp">LMP → GA / EDD</button>
+<button class="tab" id="tab-ga" role="tab" aria-selected="false" aria-controls="panel-ga">Date + GA → LMP / EDD</button>
+</div>
+<div id="panel-usg" role="tabpanel" aria-labelledby="tab-usg">
+<h2>Calculate from ultrasound</h2><p class="help">Enter the scan date and gestational age reported on the ultrasound.</p>
+<div class="grid">
+<div class="field"><label for="usg-date">USG date</label><input type="date" id="usg-date" required></div>
+<div class="field"><label for="usg-weeks">Gestational age (whole weeks)</label><input type="number" id="usg-weeks" min="0" max="45" step="1" inputmode="numeric" placeholder="e.g. 36"></div>
+<div class="field"><label for="usg-days">Additional days</label><select id="usg-days"><option value="0">0 days</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select><span class="hint">Example: 36 weeks 5 days = 36+5.</span></div>
+</div><div class="actions"><button class="primary" id="calc-usg">Calculate dates</button><button class="secondary" data-reset="usg">Clear</button></div><div class="error" id="err-usg" role="alert"></div>
+</div>
+<div id="panel-lmp" role="tabpanel" aria-labelledby="tab-lmp" class="hidden">
+<h2>Calculate from LMP</h2><p class="help">Gestational age is elapsed calendar days from the first day of the last menstrual period to your chosen date.</p>
+<div class="grid">
+<div class="field"><label for="lmp-date">First day of LMP</label><input type="date" id="lmp-date"></div>
+<div class="field"><label for="ref-date">Calculate gestational age on</label><input type="date" id="ref-date"></div>
+</div><div class="actions"><button class="primary" id="calc-lmp">Calculate dates</button><button class="secondary" data-reset="lmp">Clear</button></div><div class="error" id="err-lmp" role="alert"></div>
+</div>
+<div id="panel-ga" role="tabpanel" aria-labelledby="tab-ga" class="hidden">
+<h2>Calculate from date and gestational age</h2><p class="help">Use when a report gives a reference date and gestational age, for example 37 weeks 6 days.</p>
+<div class="grid">
+<div class="field"><label for="ga-date">Reference date (e.g. USG date)</label><input type="date" id="ga-date"></div>
+<div class="field"><label for="ga-weeks">Gestational age (whole weeks)</label><input type="number" id="ga-weeks" min="0" max="45" step="1" inputmode="numeric" placeholder="e.g. 37"></div>
+<div class="field"><label for="ga-days">Additional days</label><select id="ga-days"><option value="0">0 days</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select></div>
+</div><div class="actions"><button class="primary" id="calc-ga">Calculate dates</button><button class="secondary" data-reset="ga">Clear</button></div><div class="error" id="err-ga" role="alert"></div>
+</div>
+<div class="results" id="results" aria-live="polite" aria-atomic="true">
+<div class="result-head"><h2>Calculated results</h2><button class="secondary" id="print">Print results</button></div>
+<div class="result-grid">
+<div class="metric"><span>Estimated LMP</span><strong id="out-lmp">—</strong><small id="out-lmp-note"></small></div>
+<div class="metric"><span>Estimated due date (EDD)</span><strong id="out-edd">—</strong><small>40 weeks from estimated LMP</small></div>
+<div class="metric"><span>Gestational age on reference date</span><strong id="out-ga">—</strong><small id="out-ga-note"></small></div>
+</div><p id="out-reference" class="hint"></p>
+</div>
+<div class="note"><strong>Clinical note:</strong> These are calendar-based estimates, not a substitute for clinical assessment. Confirm the dating basis and follow local obstetric guidance. Ultrasound dating accuracy depends on gestational age and the report's dating method. Obstetric notation 37+6 means 37 weeks 6 days; decimal weeks (37.6) are different.</div>
+</section></main>
+<footer class="foot">Privacy: calculations run in your browser. This page does not send or save entered dates. If hosted publicly, do not enter identifiable patient information.</footer>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const localISO = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const today = new Date();
+  $('usg-date').value = localISO(today);
+  $('ga-date').value = localISO(today);
+  $('ref-date').value = localISO(today);
+  const parseDate = value => {
+    if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+    const [y,m,d] = value.split('-').map(Number);
+    const date = new Date(Date.UTC(y,m-1,d));
+    return date.getUTCFullYear()===y && date.getUTCMonth()===m-1 && date.getUTCDate()===d ? date : null;
+  };
+  const addDays = (date, days) => new Date(date.getTime() + days*86400000);
+  const diffDays = (a,b) => Math.round((a.getTime()-b.getTime())/86400000);
+  const format = date => date.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'});
+  const gaText = days => `${Math.floor(days/7)} weeks ${days%7} days`;
+  function showResults(lmp, reference, gaDays, lmpNote) {
+    $('out-lmp').textContent = format(lmp);
+    $('out-edd').textContent = format(addDays(lmp,280));
+    $('out-ga').textContent = gaText(gaDays);
+    $('out-lmp-note').textContent = lmpNote;
+    $('out-ga-note').textContent = `${gaDays} days elapsed from estimated LMP`;
+    $('out-reference').textContent = `Reference date: ${format(reference)}. All dates are estimates.`;
+    $('results').classList.add('visible');
+  }
+  function error(mode,msg) { $('err-'+mode).textContent=msg; $('results').classList.remove('visible'); }
+  function clearError(mode) { $('err-'+mode).textContent=''; }
+  function getGA(weeksId,daysId) {
+    const raw=$(weeksId).value.trim(), weeks=Number(raw), days=Number($(daysId).value);
+    if(raw==='' || !Number.isInteger(weeks) || weeks<0 || weeks>45 || !Number.isInteger(days) || days<0 || days>6) return null;
+    return weeks*7+days;
+  }
+  function runUsg() {
+    clearError('usg'); const date=parseDate($('usg-date').value), ga=getGA('usg-weeks','usg-days');
+    if(!date || ga===null) return error('usg','Enter a valid USG date, whole number of weeks, and 0–6 additional days.');
+    const lmp=addDays(date,-ga); showResults(lmp,date,ga,'Estimated by subtracting USG gestational age');
+  }
+  function runGa() {
+    clearError('ga'); const date=parseDate($('ga-date').value), ga=getGA('ga-weeks','ga-days');
+    if(!date || ga===null) return error('ga','Enter a valid reference date, whole number of weeks, and 0–6 additional days.');
+    showResults(addDays(date,-ga),date,ga,'Estimated from reference date and gestational age');
+  }
+  function runLmp() {
+    clearError('lmp'); const lmp=parseDate($('lmp-date').value), ref=parseDate($('ref-date').value);
+    if(!lmp || !ref) return error('lmp','Enter both the LMP and reference date.');
+    const days=diffDays(ref,lmp);
+    if(days<0) return error('lmp','The reference date cannot be before the LMP.');
+    if(days>315) return error('lmp','The interval exceeds 45 weeks. Please check the dates.');
+    showResults(lmp,ref,days,'Entered LMP');
+  }
+  const modes=['usg','lmp','ga'];
+  function activate(mode) {
+    modes.forEach(m=>{const active=m===mode;$('tab-'+m).setAttribute('aria-selected',String(active));$('panel-'+m).classList.toggle('hidden',!active);$('tab-'+m).setAttribute('tabindex',active?'0':'-1');});
+    $('results').classList.remove('visible'); modes.forEach(clearError);
+  }
+  modes.forEach(m=>$('tab-'+m).addEventListener('click',()=>activate(m)));
+  $('calc-usg').addEventListener('click',runUsg);
+  $('calc-ga').addEventListener('click',runGa);
+  $('calc-lmp').addEventListener('click',runLmp);
+  document.querySelectorAll('[data-reset]').forEach(btn=>btn.addEventListener('click',()=>{
+    const m=btn.dataset.reset; clearError(m); $('results').classList.remove('visible');
+    if(m==='usg') {$('usg-date').value='';$('usg-weeks').value='';$('usg-days').value='0';}
+    if(m==='ga') {$('ga-date').value='';$('ga-weeks').value='';$('ga-days').value='0';}
+    if(m==='lmp') {$('lmp-date').value='';$('ref-date').value=localISO(today);}
+  }));
+  $('print').addEventListener('click',()=>window.print());
+})();
+</script>
+</body>
+</html>
