@@ -565,6 +565,32 @@
   }
   initializePlanningTools();
 
+  // Keep section navigation in sync with the visible section without a scroll-event loop.
+  const sectionLinks = Array.from(document.querySelectorAll('.section-nav a[href^="#"]'));
+  if ('IntersectionObserver' in window && sectionLinks.length) {
+    const sectionById = new Map(sectionLinks.map(link => [link.getAttribute('href').slice(1), link]));
+    const visibleSections = new Map();
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) visibleSections.set(entry.target.id, entry.boundingClientRect.top);
+        else visibleSections.delete(entry.target.id);
+      });
+      let activeId = null, bestTop = Infinity;
+      visibleSections.forEach((top, id) => {
+        const score = Math.abs(top - 100);
+        if (score < bestTop) { bestTop = score; activeId = id; }
+      });
+      sectionLinks.forEach(link => {
+        if (link === sectionById.get(activeId)) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-10% 0px -65% 0px', threshold: 0 });
+    sectionById.forEach((link, id) => {
+      const section = $(id);
+      if (section) sectionObserver.observe(section);
+    });
+  }
+
   // Progressive Web App installation remains optional and cannot block core tools.
   let deferredInstallPrompt = null;
   const installButton = $('install-app'), installStatus = $('install-status');
