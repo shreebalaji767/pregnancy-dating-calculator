@@ -23,5 +23,6 @@ jobs:
           node --check assets/js/calculator.js
           node --check assets/js/app.js
           node --check assets/js/clinical-tools.js
+          node --check assets/js/expanded-toolkit.js
       - name: Run calculator and site integrity tests
         run: node --test tests/*.test.cjs
