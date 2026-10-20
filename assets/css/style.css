@@ -95,6 +95,9 @@ input, select {
 }
 input::placeholder { color: #758995; }
 .actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+.backup-import { display: flex; flex-direction: column; justify-content: center; gap: 5px; min-width: min(100%, 230px); max-width: 100%; }
+.backup-import input[type="file"] { min-height: 43px; padding: 7px; font-size: .85rem; }
+#tool-backup-status { overflow-wrap: anywhere; }
 button.primary, button.secondary {
   min-height: 43px; padding: 10px 15px; border: 1px solid transparent; border-radius: 9px;
   font-weight: 800; transition: background .12s, border-color .12s;
