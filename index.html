@@ -44,6 +44,7 @@
       <a href="#guide" data-en="Week guide" data-hi="सप्ताह गाइड">Week guide</a>
       <a href="#planner" data-en="Visit planner" data-hi="जाँच योजना">Visit planner</a>
       <a href="#calculators" data-en="Other calculators" data-hi="अन्य कैलकुलेटर">Other calculators</a>
+      <a href="#planning" data-en="Planning tools" data-hi="योजना टूल">Planning tools</a>
     </nav>
 
     <section class="card" id="dating" aria-labelledby="dating-title">
@@ -170,6 +171,63 @@
       </div>
     </section>
 
+    <section class="card" id="planning" aria-labelledby="planning-title">
+      <div class="section-heading"><div><p class="kicker" data-en="06 / PERSONAL PLANNING" data-hi="06 / व्यक्तिगत योजना">06 / PERSONAL PLANNING</p><h2 id="planning-title" data-en="Pregnancy planning tools" data-hi="गर्भावस्था योजना टूल">Pregnancy planning tools</h2></div><span class="section-mark" aria-hidden="true">06</span></div>
+      <p class="help" data-en="Free tools that run in this browser. Your checklists, appointment details and draft notes are stored only in this browser on this device; they are not uploaded. Avoid adding patient identifiers, and use caution on shared devices." data-hi="इस ब्राउज़र में चलने वाले निःशुल्क टूल। चेकलिस्ट, अपॉइंटमेंट और नोट इसी डिवाइस के ब्राउज़र में सहेजे जाते हैं; अपलोड नहीं होते। मरीज़ की पहचान न जोड़ें और साझा डिवाइस पर सावधानी रखें।">Free tools that run in this browser. Your checklists, appointment details and draft notes are stored only in this browser on this device; they are not uploaded. Avoid adding patient identifiers, and use caution on shared devices.</p>
+      <div class="planning-grid">
+        <article class="tool-card">
+          <h3 data-en="Hospital bag checklist" data-hi="अस्पताल बैग चेकलिस्ट">Hospital bag checklist</h3>
+          <p class="help" data-en="A flexible packing list. Adapt it to your hospital's instructions." data-hi="एक उपयोगी पैकिंग सूची। इसे अपने अस्पताल के निर्देशों के अनुसार बदलें।">A flexible packing list. Adapt it to your hospital's instructions.</p>
+          <div class="checklist" id="bag-checklist">
+            <label><input type="checkbox" data-local-check="bag-id"> <span data-en="Required hospital documents and records" data-hi="ज़रूरी अस्पताल दस्तावेज़ और रिकॉर्ड">Required hospital documents and records</span></label>
+            <label><input type="checkbox" data-local-check="bag-clothes"> <span data-en="Comfortable clothes and going-home outfit" data-hi="आरामदायक कपड़े और घर जाने के कपड़े">Comfortable clothes and going-home outfit</span></label>
+            <label><input type="checkbox" data-local-check="bag-hygiene"> <span data-en="Personal hygiene items and toiletries" data-hi="व्यक्तिगत स्वच्छता की चीज़ें">Personal hygiene items and toiletries</span></label>
+            <label><input type="checkbox" data-local-check="bag-baby"> <span data-en="Baby clothes, nappies and blanket" data-hi="बच्चे के कपड़े, डायपर और कंबल">Baby clothes, nappies and blanket</span></label>
+            <label><input type="checkbox" data-local-check="bag-charger"> <span data-en="Phone and charger" data-hi="फ़ोन और चार्जर">Phone and charger</span></label>
+            <label><input type="checkbox" data-local-check="bag-support"> <span data-en="Support person's essentials and transport plan" data-hi="सहायक व्यक्ति की ज़रूरतें और परिवहन योजना">Support person's essentials and transport plan</span></label>
+          </div>
+          <div class="actions"><button class="secondary" id="reset-bag" type="button" data-en="Reset checklist" data-hi="चेकलिस्ट रीसेट करें">Reset checklist</button></div>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Pregnancy preparation checklist" data-hi="गर्भावस्था तैयारी चेकलिस्ट">Pregnancy preparation checklist</h3>
+          <p class="help" data-en="Use as prompts to discuss with your care team—not as mandatory medical instructions." data-hi="इन्हें देखभाल टीम से चर्चा के संकेत मानें, अनिवार्य चिकित्सा निर्देश नहीं।">Use as prompts to discuss with your care team—not as mandatory medical instructions.</p>
+          <div class="checklist" id="prep-checklist">
+            <label><input type="checkbox" data-local-check="prep-care"> <span data-en="Know whom to contact for routine and urgent concerns" data-hi="सामान्य और तत्काल चिंता में किससे संपर्क करना है, जानें">Know whom to contact for routine and urgent concerns</span></label>
+            <label><input type="checkbox" data-local-check="prep-transport"> <span data-en="Plan transport to the chosen facility" data-hi="चुनी गई सुविधा तक पहुँचने की योजना बनाएँ">Plan transport to the chosen facility</span></label>
+            <label><input type="checkbox" data-local-check="prep-support"> <span data-en="Discuss support and birth preferences with your team" data-hi="टीम से सहायता और प्रसव प्राथमिकताओं पर चर्चा करें">Discuss support and birth preferences with your team</span></label>
+            <label><input type="checkbox" data-local-check="prep-meds"> <span data-en="Review medicines and supplements with a clinician" data-hi="चिकित्सक से दवाओं और सप्लीमेंट की समीक्षा करें">Review medicines and supplements with a clinician</span></label>
+            <label><input type="checkbox" data-local-check="prep-records"> <span data-en="Keep relevant records and test results accessible" data-hi="ज़रूरी रिकॉर्ड और जाँच रिपोर्ट उपलब्ध रखें">Keep relevant records and test results accessible</span></label>
+            <label><input type="checkbox" data-local-check="prep-questions"> <span data-en="Write down questions for the next appointment" data-hi="अगली मुलाक़ात के लिए प्रश्न लिखें">Write down questions for the next appointment</span></label>
+          </div>
+          <div class="actions"><button class="secondary" id="reset-prep" type="button" data-en="Reset checklist" data-hi="चेकलिस्ट रीसेट करें">Reset checklist</button></div>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Birth preferences draft" data-hi="प्रसव प्राथमिकताओं का मसौदा">Birth preferences draft</h3>
+          <p class="help" data-en="Record preferences to discuss with your care team. Plans may need to change for safety." data-hi="देखभाल टीम से चर्चा के लिए प्राथमिकताएँ लिखें। सुरक्षा के लिए योजना बदलनी पड़ सकती है।">Record preferences to discuss with your care team. Plans may need to change for safety.</p>
+          <div class="field"><label for="birth-support" data-en="Support person / preferences" data-hi="सहायक व्यक्ति / प्राथमिकताएँ">Support person / preferences</label><input id="birth-support" type="text" maxlength="160" autocomplete="off"></div>
+          <div class="field"><label for="birth-environment" data-en="Comfort, privacy or environment preferences" data-hi="आराम, निजता या वातावरण की प्राथमिकताएँ">Comfort, privacy or environment preferences</label><textarea id="birth-environment" rows="3" maxlength="1200"></textarea></div>
+          <div class="field"><label for="birth-feeding" data-en="Feeding and newborn-care questions" data-hi="शिशु आहार और नवजात देखभाल के प्रश्न">Feeding and newborn-care questions</label><textarea id="birth-feeding" rows="3" maxlength="1200"></textarea></div>
+          <div class="field"><label for="birth-other" data-en="Other questions for the clinician" data-hi="चिकित्सक के लिए अन्य प्रश्न">Other questions for the clinician</label><textarea id="birth-other" rows="3" maxlength="1200"></textarea></div>
+          <div class="actions"><button class="primary" id="save-birth" type="button" data-en="Save on this device" data-hi="इस डिवाइस पर सहेजें">Save on this device</button><button class="secondary" id="download-birth" type="button" data-en="Download plan (.txt)" data-hi="योजना डाउनलोड करें (.txt)">Download plan (.txt)</button></div>
+          <p id="birth-status" class="tool-result" role="status" aria-live="polite"></p>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Appointment tracker" data-hi="अपॉइंटमेंट ट्रैकर">Appointment tracker</h3>
+          <p class="help" data-en="A simple local reminder list. It does not send notifications; check your dates and use your usual calendar if you need alerts." data-hi="एक साधारण स्थानीय सूची। यह नोटिफ़िकेशन नहीं भेजती; अलर्ट चाहिए तो अपना सामान्य कैलेंडर उपयोग करें।">A simple local reminder list. It does not send notifications; check your dates and use your usual calendar if you need alerts.</p>
+          <div class="field"><label for="appt-title" data-en="Appointment / task" data-hi="अपॉइंटमेंट / कार्य">Appointment / task</label><input id="appt-title" type="text" maxlength="120" autocomplete="off" placeholder="e.g. Follow-up visit"></div>
+          <div class="form-grid">
+            <div class="field"><label for="appt-date" data-en="Date" data-hi="तारीख़">Date</label><input id="appt-date" type="date"></div>
+            <div class="field"><label for="appt-time" data-en="Time (optional)" data-hi="समय (वैकल्पिक)">Time (optional)</label><input id="appt-time" type="time"></div>
+          </div>
+          <div class="actions"><button class="primary" id="add-appt" type="button" data-en="Add appointment" data-hi="अपॉइंटमेंट जोड़ें">Add appointment</button><button class="secondary" id="export-planning" type="button" data-en="Export planning notes (.txt)" data-hi="योजना नोट्स निर्यात करें (.txt)">Export planning notes (.txt)</button></div>
+          <p id="appt-status" class="tool-result" role="status" aria-live="polite"></p>
+          <ul id="appointment-list" class="appointment-list" aria-live="polite"></ul>
+          <button class="secondary" id="clear-appts" type="button" data-en="Clear all appointments" data-hi="सभी अपॉइंटमेंट हटाएँ">Clear all appointments</button>
+        </article>
+      </div>
+      <p class="note small-note" data-en="Local storage is not encrypted by this website. Anyone with access to this browser profile may be able to see saved entries. Clear them before sharing a device." data-hi="इस वेबसाइट द्वारा स्थानीय स्टोरेज एन्क्रिप्ट नहीं किया जाता। इस ब्राउज़र प्रोफ़ाइल तक पहुँच रखने वाला कोई व्यक्ति सहेजी गई जानकारी देख सकता है। डिवाइस साझा करने से पहले इसे साफ़ करें।">Local storage is not encrypted by this website. Anyone with access to this browser profile may be able to see saved entries. Clear them before sharing a device.</p>
+    </section>
+
     <section class="card privacy-card" id="privacy" aria-labelledby="privacy-title">
       <div class="section-heading"><div><p class="kicker" data-en="PRIVACY & ACCESSIBILITY" data-hi="गोपनीयता और सुलभता">PRIVACY & ACCESSIBILITY</p><h2 id="privacy-title" data-en="Designed to minimize data exposure" data-hi="डेटा गोपनीयता को ध्यान में रखकर बनाया गया">Designed to minimize data exposure</h2></div></div>
       <ul class="privacy-list">
@@ -179,7 +237,7 @@
         <li data-en="Use keyboard navigation, visible focus indicators and reduced-motion settings." data-hi="कीबोर्ड नेविगेशन, स्पष्ट फ़ोकस संकेत और कम-एनिमेशन सेटिंग उपलब्ध हैं।">Use keyboard navigation, visible focus indicators and reduced-motion settings.</li>
       </ul>
       <p class="note"><strong data-en="Medical disclaimer" data-hi="चिकित्सकीय अस्वीकरण">Medical disclaimer</strong><span data-en=" This educational tool does not provide diagnosis or treatment advice. Dating, screening and antenatal plans must be confirmed by a qualified clinician using current local guidance. Seek urgent medical care for urgent symptoms." data-hi=" यह शैक्षिक टूल निदान या उपचार सलाह नहीं देता। तारीख़, स्क्रीनिंग और प्रसवपूर्व योजना की पुष्टि योग्य चिकित्सक द्वारा वर्तमान स्थानीय दिशानिर्देशों के अनुसार करें। गंभीर लक्षणों में तुरंत चिकित्सा सहायता लें।"> This educational tool does not provide diagnosis or treatment advice. Dating, screening and antenatal plans must be confirmed by a qualified clinician using current local guidance. Seek urgent medical care for urgent symptoms.</span></p>
-      <p class="sources">Clinical references: <a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date" target="_blank" rel="noopener noreferrer">ACOG: Methods for Estimating the Due Date</a> · <a href="https://www.cdc.gov/bmi/about/" target="_blank" rel="noopener noreferrer">CDC: About BMI</a> · <a href="https://www.nhs.uk/pregnancy/your-pregnancy-care/your-antenatal-care-and-appointments/" target="_blank" rel="noopener noreferrer">NHS: Antenatal care</a></p>
+      <p class="sources">Clinical references for further reading: ACOG — Methods for Estimating the Due Date; CDC — About BMI; NHS — Antenatal care.</p>
     </section>
   </main>
   <footer class="site-footer"><span data-en="Pregnancy Care Toolkit · Browser-only estimates · Not a substitute for clinician assessment" data-hi="गर्भावस्था देखभाल टूलकिट · ब्राउज़र में अनुमान · चिकित्सकीय मूल्यांकन का विकल्प नहीं">Pregnancy Care Toolkit · Browser-only estimates · Not a substitute for clinician assessment</span><span id="app-version">Version 2.0</span></footer>
