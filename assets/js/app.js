@@ -510,7 +510,7 @@
       $('contraction-status').textContent = t('Session cleared.', 'सत्र साफ़ किया गया।');
     });
     on('export-contractions', 'click', () => {
-      const lines = [t('CONTRACTION TIMER SESSION', 'संकुचन टाइमर सत्र'), t('For personal notes only; follow your maternity team's advice.', 'केवल व्यक्तिगत नोट; अपनी मातृत्व टीम की सलाह मानें。'), ''];
+      const lines = [t('CONTRACTION TIMER SESSION', 'संकुचन टाइमर सत्र'), t('For personal notes only; follow your maternity team’s advice.', 'केवल व्यक्तिगत नोट; अपनी मातृत्व टीम की सलाह मानें。'), ''];
       if (!contractionRows.length) lines.push(t('No completed contractions recorded.', 'कोई पूरा संकुचन दर्ज नहीं है।'));
       contractionRows.forEach((row, index) => lines.push((index + 1) + '. ' + t('Duration: ', 'अवधि: ') + elapsedLabel(row.duration) + (row.interval == null ? '' : ' · ' + t('Start interval: ', 'शुरुआत का अंतराल: ') + elapsedLabel(row.interval))));
       downloadText('contraction-session.txt', lines.join('\n'));
@@ -527,7 +527,7 @@
       downloadText('movement-session.txt', [
         t('MOVEMENT SESSION COUNT', 'हलचल सत्र की गिनती'),
         t('Count recorded in this page session: ', 'इस पेज सत्र में दर्ज गिनती: ') + movementCount,
-        t('This is not a diagnostic result. Follow your maternity team's guidance and contact them immediately for reduced or changed movements.', 'यह निदान नहीं है। अपनी मातृत्व टीम की सलाह मानें और हलचल कम या बदली होने पर तुरंत संपर्क करें।')
+        t('This is not a diagnostic result. Follow your maternity team’s guidance and contact them immediately for reduced or changed movements.', 'यह निदान नहीं है। अपनी मातृत्व टीम की सलाह मानें और हलचल कम या बदली होने पर तुरंत संपर्क करें।')
       ].join('\n'));
     });
     renderContractionClock();
