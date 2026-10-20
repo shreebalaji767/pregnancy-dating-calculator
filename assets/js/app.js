@@ -27,6 +27,11 @@
       const n = Number(option.value);
       option.textContent = language === 'hi' ? n + ' दिन' : n + (n === 1 ? ' day' : ' days');
     });
+    $('ivf-age').options[0].textContent = t('Day 5 blastocyst', 'दिन 5 ब्लास्टोसिस्ट');
+    $('ivf-age').options[1].textContent = t('Day 3 embryo', 'दिन 3 भ्रूण');
+    Array.from($('guide-week').options).forEach(option => {
+      option.textContent = t('Week ' + option.value, 'सप्ताह ' + option.value);
+    });
     if (currentResult) render(currentResult, false);
     updateGuide();
   }
