@@ -287,6 +287,170 @@
     const link = document.createElement('a'); link.href = url; link.download = 'pregnancy-milestones.ics'; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
   });
 
+  // Local-only planning helpers: no network calls, accounts, APIs, or third-party libraries.
+  const planningStorageKey = 'pregnancy-toolkit-planning-v1';
+  let planningState = { checks: {}, birth: {}, appointments: [] };
+  function readPlanningState() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(planningStorageKey) || '{}');
+      planningState = {
+        checks: parsed && parsed.checks && typeof parsed.checks === 'object' ? parsed.checks : {},
+        birth: parsed && parsed.birth && typeof parsed.birth === 'object' ? parsed.birth : {},
+        appointments: Array.isArray(parsed && parsed.appointments) ? parsed.appointments.filter(item => item && typeof item.title === 'string' && typeof item.date === 'string') : []
+      };
+    } catch (_) { planningState = { checks: {}, birth: {}, appointments: [] }; }
+  }
+  function savePlanningState() {
+    try {
+      localStorage.setItem(planningStorageKey, JSON.stringify(planningState));
+      return true;
+    } catch (_) { return false; }
+  }
+  function downloadText(filename, content) {
+    const url = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url; link.download = filename; document.body.appendChild(link); link.click(); link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  function readBirthFields() {
+    return {
+      support: $('birth-support').value.trim(),
+      environment: $('birth-environment').value.trim(),
+      feeding: $('birth-feeding').value.trim(),
+      other: $('birth-other').value.trim()
+    };
+  }
+  function birthPlanText(birth) {
+    return [
+      t('BIRTH PREFERENCES — DISCUSSION DRAFT', 'प्रसव प्राथमिकताएँ — चर्चा के लिए मसौदा'),
+      t('This is a discussion aid, not a medical directive. Care may change based on clinical needs.', 'यह चर्चा के लिए है, चिकित्सा निर्देश नहीं। चिकित्सकीय ज़रूरत के अनुसार देखभाल बदल सकती है।'),
+      '',
+      t('Support person / preferences:', 'सहायक व्यक्ति / प्राथमिकताएँ:'),
+      birth.support || '—',
+      '',
+      t('Comfort, privacy or environment:', 'आराम, निजता या वातावरण:'),
+      birth.environment || '—',
+      '',
+      t('Feeding and newborn-care questions:', 'शिशु आहार और नवजात देखभाल के प्रश्न:'),
+      birth.feeding || '—',
+      '',
+      t('Other questions for the clinician:', 'चिकित्सक के लिए अन्य प्रश्न:'),
+      birth.other || '—',
+      '',
+      t('Prepared locally with Pregnancy Care Toolkit. Confirm preferences with your care team.', 'Pregnancy Care Toolkit में स्थानीय रूप से तैयार। अपनी देखभाल टीम से प्राथमिकताओं की पुष्टि करें।')
+    ].join('\n');
+  }
+  function renderAppointments() {
+    const list = $('appointment-list');
+    list.replaceChildren();
+    const appointments = planningState.appointments.slice().sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+    if (!appointments.length) {
+      const empty = document.createElement('li');
+      empty.className = 'empty-state';
+      empty.textContent = t('No appointments added yet.', 'अभी कोई अपॉइंटमेंट नहीं जोड़ा गया।');
+      list.appendChild(empty);
+      return;
+    }
+    appointments.forEach(item => {
+      const li = document.createElement('li');
+      const detail = document.createElement('span');
+      const date = Dates.parseISO(item.date);
+      detail.textContent = (date ? formatDate(date) : item.date) + (item.time ? ' · ' + item.time : '') + ' — ' + item.title;
+      const remove = document.createElement('button');
+      remove.type = 'button'; remove.className = 'secondary';
+      remove.textContent = t('Remove', 'हटाएँ');
+      remove.setAttribute('aria-label', t('Remove appointment: ', 'अपॉइंटमेंट हटाएँ: ') + item.title);
+      remove.addEventListener('click', () => {
+        planningState.appointments = planningState.appointments.filter(entry => entry.id !== item.id);
+        savePlanningState(); renderAppointments();
+        $('appt-status').textContent = t('Appointment removed.', 'अपॉइंटमेंट हटा दिया गया।');
+      });
+      li.append(detail, remove); list.appendChild(li);
+    });
+  }
+  function planningExportText() {
+    const checked = key => planningState.checks[key] ? '[x]' : '[ ]';
+    const checklist = [
+      t('HOSPITAL BAG CHECKLIST', 'अस्पताल बैग चेकलिस्ट'),
+      checked('bag-id') + ' ' + t('Required hospital documents and records', 'ज़रूरी अस्पताल दस्तावेज़ और रिकॉर्ड'),
+      checked('bag-clothes') + ' ' + t('Comfortable clothes and going-home outfit', 'आरामदायक कपड़े और घर जाने के कपड़े'),
+      checked('bag-hygiene') + ' ' + t('Personal hygiene items and toiletries', 'व्यक्तिगत स्वच्छता की चीज़ें'),
+      checked('bag-baby') + ' ' + t('Baby clothes, nappies and blanket', 'बच्चे के कपड़े, डायपर और कंबल'),
+      checked('bag-charger') + ' ' + t('Phone and charger', 'फ़ोन और चार्जर'),
+      checked('bag-support') + ' ' + t('Support person's essentials and transport plan', 'सहायक व्यक्ति की ज़रूरतें और परिवहन योजना'),
+      '',
+      t('PREGNANCY PREPARATION CHECKLIST', 'गर्भावस्था तैयारी चेकलिस्ट'),
+      checked('prep-care') + ' ' + t('Know whom to contact for routine and urgent concerns', 'सामान्य और तत्काल चिंता में किससे संपर्क करना है, जानें'),
+      checked('prep-transport') + ' ' + t('Plan transport to the chosen facility', 'चुनी गई सुविधा तक पहुँचने की योजना बनाएँ'),
+      checked('prep-support') + ' ' + t('Discuss support and birth preferences with your team', 'टीम से सहायता और प्रसव प्राथमिकताओं पर चर्चा करें'),
+      checked('prep-meds') + ' ' + t('Review medicines and supplements with a clinician', 'चिकित्सक से दवाओं और सप्लीमेंट की समीक्षा करें'),
+      checked('prep-records') + ' ' + t('Keep relevant records and test results accessible', 'ज़रूरी रिकॉर्ड और जाँच रिपोर्ट उपलब्ध रखें'),
+      checked('prep-questions') + ' ' + t('Write down questions for the next appointment', 'अगली मुलाक़ात के लिए प्रश्न लिखें'),
+      '',
+      t('BIRTH PREFERENCES', 'प्रसव प्राथमिकताएँ'),
+      birthPlanText(planningState.birth || {}),
+      '',
+      t('APPOINTMENTS', 'अपॉइंटमेंट'),
+      ...planningState.appointments.slice().sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || ''))).map(item => (item.date || '') + (item.time ? ' ' + item.time : '') + ' — ' + item.title),
+      '',
+      t('Privacy: this file is created on your device. Keep it secure and avoid adding identifying details.', 'गोपनीयता: यह फ़ाइल आपके डिवाइस पर बनती है। इसे सुरक्षित रखें और पहचान की जानकारी न जोड़ें।')
+    ];
+    return checklist.join('\n');
+  }
+  function initializePlanningTools() {
+    readPlanningState();
+    document.querySelectorAll('[data-local-check]').forEach(input => {
+      input.checked = planningState.checks[input.dataset.localCheck] === true;
+      input.addEventListener('change', () => {
+        planningState.checks[input.dataset.localCheck] = input.checked;
+        const ok = savePlanningState();
+        $('birth-status').textContent = ok ? '' : t('Could not save on this device; browser storage may be disabled or full.', 'इस डिवाइस पर सहेज नहीं सके; ब्राउज़र स्टोरेज बंद या भरा हो सकता है।');
+      });
+    });
+    [['reset-bag', 'bag-'], ['reset-prep', 'prep-']].forEach(([buttonId, prefix]) => on(buttonId, 'click', () => {
+      document.querySelectorAll('[data-local-check]').forEach(input => {
+        if (input.dataset.localCheck.startsWith(prefix)) {
+          input.checked = false; delete planningState.checks[input.dataset.localCheck];
+        }
+      });
+      savePlanningState();
+    }));
+    const savedBirth = planningState.birth || {};
+    $('birth-support').value = savedBirth.support || '';
+    $('birth-environment').value = savedBirth.environment || '';
+    $('birth-feeding').value = savedBirth.feeding || '';
+    $('birth-other').value = savedBirth.other || '';
+    on('save-birth', 'click', () => {
+      planningState.birth = readBirthFields();
+      const ok = savePlanningState();
+      $('birth-status').textContent = ok ? t('Birth preferences saved on this device.', 'प्रसव प्राथमिकताएँ इस डिवाइस पर सहेजी गईं।') : t('Could not save. Export your plan instead or check browser storage settings.', 'सहेज नहीं सके। योजना निर्यात करें या ब्राउज़र स्टोरेज सेटिंग जाँचें।');
+    });
+    on('download-birth', 'click', () => downloadText('birth-preferences.txt', birthPlanText(readBirthFields())));
+    $('appt-date').value = todayISO;
+    renderAppointments();
+    on('add-appt', 'click', () => {
+      const title = $('appt-title').value.trim(), date = $('appt-date').value, time = $('appt-time').value;
+      if (!title || !Dates.parseISO(date)) {
+        $('appt-status').textContent = t('Enter an appointment name and a valid date.', 'अपॉइंटमेंट का नाम और सही तारीख़ दर्ज करें।');
+        return;
+      }
+      planningState.appointments.push({ id: String(Date.now()) + '-' + Math.random().toString(36).slice(2, 8), title, date, time });
+      const ok = savePlanningState();
+      $('appt-title').value = ''; renderAppointments();
+      $('appt-status').textContent = ok ? t('Appointment added on this device. This tool does not send alerts.', 'अपॉइंटमेंट इस डिवाइस पर जोड़ा गया। यह टूल अलर्ट नहीं भेजता।') : t('Added for this session, but could not save permanently.', 'इस सत्र के लिए जोड़ा गया, लेकिन स्थायी रूप से सहेजा नहीं जा सका।');
+    });
+    on('clear-appts', 'click', () => {
+      if (!window.confirm(t('Clear all saved appointments from this browser?', 'इस ब्राउज़र से सभी सहेजे गए अपॉइंटमेंट हटाएँ?'))) return;
+      planningState.appointments = []; savePlanningState(); renderAppointments();
+      $('appt-status').textContent = t('All appointments cleared.', 'सभी अपॉइंटमेंट हटा दिए गए।');
+    });
+    on('export-planning', 'click', () => {
+      planningState.birth = readBirthFields();
+      downloadText('pregnancy-planning-notes.txt', planningExportText());
+    });
+  }
+  initializePlanningTools();
+
   // Progressive Web App installation remains optional and cannot block core tools.
   let deferredInstallPrompt = null;
   const installButton = $('install-app'), installStatus = $('install-status');
