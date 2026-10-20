@@ -42,8 +42,8 @@ test('LMP dating calculates gestational age on the reference date', () => {
 
 test('reference-date dating calculates the estimated LMP', () => {
   const result = Calculator.fromGestationalAge('2026-10-20', 37, 6);
-  assert.equal(Dates.toISO(result.lmp), '2026-01-30');
-  assert.equal(Dates.toISO(result.edd), '2026-11-06');
+  assert.equal(Dates.toISO(result.lmp), '2026-01-28');
+  assert.equal(Dates.toISO(result.edd), '2026-11-04');
   assert.equal(result.totalDays, 265);
 });
 
