@@ -126,39 +126,44 @@
   const installStatus = $('install-status');
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  if (isStandalone) {
-    installButton.hidden = true;
-    installStatus.textContent = 'App installed — you can open it from your home screen.';
-  }
-  window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    installButton.hidden = false;
-    installButton.textContent = '＋ Install app';
-  });
-  window.addEventListener('appinstalled', () => {
-    deferredInstallPrompt = null;
-    installButton.hidden = true;
-    installStatus.textContent = 'App installed successfully.';
-  });
-  installButton.addEventListener('click', async () => {
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      const choice = await deferredInstallPrompt.userChoice;
-      installStatus.textContent = choice.outcome === 'accepted' ? 'Installation started.' : 'Installation was cancelled. You can install it later from your browser menu.';
+
+  // Installation UI is optional: a missing element must not stop the calculator.
+  if (installButton && installStatus) {
+    if (isStandalone) {
+      installButton.hidden = true;
+      installStatus.textContent = 'App installed — you can open it from your home screen.';
+    }
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      installButton.hidden = false;
+      installButton.textContent = '＋ Install app';
+    });
+    window.addEventListener('appinstalled', () => {
       deferredInstallPrompt = null;
       installButton.hidden = true;
-    } else if (isIOS) {
-      installStatus.textContent = 'To install on iPhone/iPad: tap Share, then “Add to Home Screen”.';
-    } else {
-      installStatus.textContent = 'If available, choose “Install app” or “Add to Home screen” from your browser menu.';
-    }
-  });
-  if (isIOS && !isStandalone) installButton.hidden = false;
+      installStatus.textContent = 'App installed successfully.';
+    });
+    installButton.addEventListener('click', async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        installStatus.textContent = choice.outcome === 'accepted' ? 'Installation started.' : 'Installation was cancelled. You can install it later from your browser menu.';
+        deferredInstallPrompt = null;
+        installButton.hidden = true;
+      } else if (isIOS) {
+        installStatus.textContent = 'To install on iPhone/iPad: tap Share, then “Add to Home Screen”.';
+      } else {
+        installStatus.textContent = 'If available, choose “Install app” or “Add to Home screen” from your browser menu.';
+      }
+    });
+    if (isIOS && !isStandalone) installButton.hidden = false;
+  }
+
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./service-worker.js').catch(() => {
-        installStatus.textContent = 'Offline support could not be enabled in this browser.';
+        if (installStatus) installStatus.textContent = 'Offline support could not be enabled in this browser.';
       });
     });
   }
