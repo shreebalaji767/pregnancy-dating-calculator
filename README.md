@@ -15,6 +15,8 @@ A responsive, browser-only obstetric utility site for pregnancy dating, IVF tran
 - **PWA support:** install prompt where supported, iOS installation instructions, offline caching and dark mode.
 - **Accessibility:** skip link, labeled controls, keyboard-operated tabs, focus visibility, status/error announcements and reduced-motion support.
 - **No build step or third-party runtime dependencies.**
+- **No paid services or external integrations:** no paid/free APIs, AI services, analytics, ads, tracking, remote fonts, CDNs, external JavaScript libraries, accounts, or backend calls. Core calculations run locally in the browser; the service worker caches only this repository's own files. Clinical-reference URLs below are documentation links only and are not loaded by the app.
+- **No usage fees from app features:** printing/PDF uses the browser's built-in print dialog, and calendar export is generated locally. GitHub Pages is the static hosting provider; hosting is separate from runtime APIs and any GitHub account/hosting terms still apply.
 
 ## Clinical calculation notes
 
