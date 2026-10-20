@@ -112,7 +112,7 @@ test('event binding is null-safe and the offline cache is versioned for the fix'
   assert.match(app, /if \(element\) element\.addEventListener\(eventName, handler, options\)/);
   assert.doesNotMatch(app, /\$\('[^']+'\)\.addEventListener\(/);
   assert.match(html, /name="mobile-web-app-capable" content="yes"/);
-  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v6'/);
+  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v8'/);
 });
 
 test('manifest and offline assets are wired correctly', () => {
@@ -124,4 +124,22 @@ test('manifest and offline assets are wired correctly', () => {
     'assets/js/app.js', 'assets/icons/logo.svg', 'assets/icons/favicon.svg',
     'manifest.webmanifest', 'service-worker.js'
   ]) assert.ok(fs.existsSync(path.join(root, asset)), 'Missing asset: ' + asset);
+});
+
+test('free planning tools are local-only and have export controls', () => {
+  const html = load('index.html');
+  const app = load('assets/js/app.js');
+  assert.match(html, /id="planning"/);
+  assert.match(html, /id="bag-checklist"/);
+  assert.match(html, /id="prep-checklist"/);
+  assert.match(html, /id="save-birth"/);
+  assert.match(html, /id="download-birth"/);
+  assert.match(html, /id="add-appt"/);
+  assert.match(html, /id="export-planning"/);
+  assert.match(app, /pregnancy-toolkit-planning-v1/);
+  assert.match(app, /function downloadText\(/);
+  assert.match(app, /function initializePlanningTools\(/);
+  assert.doesNotMatch(html, /<script[^>]+src=["']https?:\/\//i);
+  assert.doesNotMatch(html, /<link[^>]+rel=["']stylesheet["'][^>]+href=["']https?:\/\//i);
+  assert.doesNotMatch(html, /<link[^>]+href=["']https?:\/\/[^"']+["'][^>]+rel=["']stylesheet["']/i);
 });
