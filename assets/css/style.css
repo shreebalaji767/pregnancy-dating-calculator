@@ -955,3 +955,146 @@ textarea { font: inherit; resize: vertical; }
   .tool-card, .planner-item, .metric, .guide-panel { break-inside: avoid; }
   a { color: #111 !important; text-decoration: none; }
 }
+
+
+/* Pregnancy planning: calmer hierarchy, clearer cards, and consistent spacing */
+#planning > .help {
+  max-width: 76ch;
+  margin-bottom: 22px;
+  line-height: 1.65;
+}
+#planning .planning-overview {
+  margin: 0 0 22px;
+  padding: clamp(16px, 2.5vw, 24px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--brand-soft), var(--card) 72%);
+}
+#planning .overview-heading {
+  align-items: center;
+  gap: 12px 18px;
+  margin-bottom: 20px;
+}
+#planning .overview-eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  font-size: .7rem;
+  letter-spacing: .13em;
+}
+#planning .overview-heading h3 {
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  font-weight: 750;
+}
+#planning .overview-private {
+  background: var(--card);
+  white-space: nowrap;
+}
+#planning .overview-stats { gap: 10px; }
+#planning .overview-stat {
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(23, 59, 75, .035);
+}
+#planning .overview-stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 11px;
+  color: var(--ink);
+}
+#planning .overview-stat-top strong { font-size: .8rem; }
+#planning .overview-track { height: 6px; }
+#planning .planning-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+  margin-top: 0;
+}
+#planning .planning-grid > .tool-card {
+  padding: clamp(16px, 2vw, 22px);
+  gap: 0;
+  border-color: var(--line);
+  border-radius: 15px;
+  background: var(--card);
+  box-shadow: 0 2px 8px rgba(23, 59, 75, .035);
+}
+#planning .planning-grid > .tool-card > h3 {
+  margin: 0 0 7px;
+  font-size: 1.04rem;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+#planning .planning-grid > .tool-card > .help {
+  margin: 0 0 16px;
+  line-height: 1.55;
+  font-size: .87rem;
+}
+#planning .checklist {
+  gap: 8px;
+  margin: 2px 0 14px;
+}
+#planning .checklist label {
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: .89rem;
+  line-height: 1.45;
+  font-weight: 550;
+  transition: border-color .15s ease, background .15s ease;
+}
+#planning .checklist label:has(input:checked) {
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--line));
+  background: var(--brand-soft);
+}
+#planning .checklist input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin: 2px 0 0;
+}
+#planning .planning-grid .field { gap: 6px; margin-bottom: 13px; }
+#planning .planning-grid .field label { font-size: .86rem; }
+#planning .planning-grid textarea { line-height: 1.5; }
+#planning .planning-grid .actions { margin-top: auto; padding-top: 4px; }
+#planning .planning-grid .actions button { font-size: .88rem; }
+#planning .tool-result:not(:empty) { margin-top: 12px; }
+#planning .timer-display {
+  margin: 8px 0 14px;
+  padding: 16px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  letter-spacing: .015em;
+}
+#planning .appointment-list { gap: 8px; margin: 12px 0; }
+#planning .appointment-list li:not(.empty-state) {
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: .88rem;
+}
+#planning .note.small-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  line-height: 1.55;
+  font-size: .86rem;
+}
+#planning > .actions { margin-top: 20px; }
+#planning > .actions + .note { margin-top: 12px; }
+@media (max-width: 760px) {
+  #planning .planning-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  #planning .planning-grid > .tool-card { padding: 17px; }
+}
+@media (max-width: 420px) {
+  #planning .planning-overview { padding: 14px; }
+  #planning .overview-heading { align-items: flex-start; }
+  #planning .overview-private { white-space: normal; }
+  #planning .overview-stats { grid-template-columns: minmax(0, 1fr); }
+  #planning .appointment-stat { grid-column: auto; }
+  #planning .planning-grid .actions button { flex: 1 1 100%; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #planning .checklist label { transition: none; }
+}
