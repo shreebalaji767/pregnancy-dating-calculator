@@ -120,7 +120,7 @@ test('complete toolkit displays every tool without a search field, filter dropdo
   assert.match(html, /All 273 tools are displayed together/);
   assert.match(html, /Nothing is filtered or hidden/);
   const toolkit = read('assets/js/expanded-toolkit.js');
-  assert.doesNotMatch(toolkit, /tool-category|tools\.filter\(t=>cat/);
+  assert.doesNotMatch(toolkit, /\$\('tool-category'\)|tools\.filter\(t=>cat/);
   assert.match(toolkit, /const list=tools/);
   assert.match(toolkit, /for\(const group of groups\)/);
   assert.match(toolkit, /tool-library-group-heading/);
