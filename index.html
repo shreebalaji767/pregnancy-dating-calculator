@@ -24,6 +24,7 @@
   <script defer src="assets/js/calculator.js"></script>
   <script defer src="assets/js/app.js"></script>
   <script defer src="assets/js/clinical-tools.js"></script>
+  <script defer src="assets/js/expanded-toolkit.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content" data-en="Skip to main content" data-hi="मुख्य सामग्री पर जाएँ">Skip to main content</a>
@@ -53,6 +54,7 @@
       <a href="#calculators" data-en="Other calculators" data-hi="अन्य कैलकुलेटर">Other calculators</a>
       <a href="#planning" data-en="Planning tools" data-hi="योजना टूल">Planning tools</a>
       <a href="#clinical-tools" data-en="Clinical utility" data-hi="क्लिनिकल टूल">Clinical utility</a>
+      <a href="#complete-toolkit" data-en="All pregnancy tools" data-hi="सभी गर्भावस्था टूल">All pregnancy tools</a>
     </nav>
 
     <section class="card" id="dating" aria-labelledby="dating-title">
@@ -334,6 +336,17 @@
         </article>
       </div>
       <div class="note"><strong data-en="Urgent obstetric warning" data-hi="तत्काल प्रसूति चेतावनी">Urgent obstetric warning</strong><span data-en=" Seek urgent maternity assessment for heavy bleeding, seizure, severe headache or visual changes, severe abdominal pain, chest pain or difficulty breathing, fever with serious illness, fluid leakage or labour concerns, or reduced/changed fetal movements. Do not use these calculators to decide whether to delay care." data-hi=" अधिक रक्तस्राव, दौरा, तेज सिरदर्द या दृष्टि में बदलाव, तेज पेट दर्द, सीने में दर्द या साँस की तकलीफ़, गंभीर बीमारी के साथ बुखार, पानी आना या प्रसव संबंधी चिंता, या भ्रूण की हलचल कम/बदलने पर तुरंत प्रसूति मूल्यांकन लें। देखभाल में देरी का निर्णय इन कैलकुलेटर से न लें।"> Seek urgent maternity assessment for heavy bleeding, seizure, severe headache or visual changes, severe abdominal pain, chest pain or difficulty breathing, fever with serious illness, fluid leakage or labour concerns, or reduced/changed fetal movements. Do not use these calculators to decide whether to delay care.</span></div>
+    </section>
+
+
+    <section class="card" id="complete-toolkit" aria-labelledby="complete-toolkit-title">
+      <div class="section-heading"><div><p class="kicker">08 / COMPLETE TOOL LIBRARY</p><h2 id="complete-toolkit-title" data-en="All pregnancy, birth and newborn tools" data-hi="गर्भावस्था, प्रसव और नवजात के सभी टूल">All pregnancy, birth and newborn tools</h2></div><span class="section-mark" aria-hidden="true">08</span></div>
+      <p class="help" data-en="Explore calculators, checklists, trackers and educational guides. Tools run in this browser; personal entries stay on this device and can be exported or cleared." data-hi="कैलकुलेटर, चेकलिस्ट, ट्रैकर और जानकारी गाइड देखें। व्यक्तिगत प्रविष्टियाँ इसी डिवाइस पर रहती हैं और निर्यात या साफ़ की जा सकती हैं।">Explore calculators, checklists, trackers and educational guides. Tools run in this browser; personal entries stay on this device and can be exported or cleared.</p>
+      <div class="tool-library-controls"><div class="field"><label for="tool-search" data-en="Search all tools" data-hi="सभी टूल खोजें">Search all tools</label><input id="tool-search" type="search" placeholder="e.g. nutrition, IVF, breastfeeding" autocomplete="off"></div><div class="field"><label for="tool-category" data-en="Filter by category" data-hi="श्रेणी से फ़िल्टर करें">Filter by category</label><select id="tool-category"><option value="all">All categories</option></select></div></div>
+      <p class="tool-library-count" id="tool-library-count" role="status" aria-live="polite"></p><div class="tool-library-grid" id="tool-library-grid"></div>
+      <section class="tool-workspace hidden" id="tool-workspace" aria-labelledby="tool-workspace-title"><div class="tool-workspace-head"><div><p class="kicker" id="tool-workspace-category">TOOL</p><h3 id="tool-workspace-title">Selected tool</h3></div><button class="secondary" id="tool-close" type="button" data-en="Close tool" data-hi="टूल बंद करें">Close tool</button></div><p class="help" id="tool-workspace-description"></p><div id="tool-workspace-content" class="tool-workspace-content"></div><div class="actions"><button class="primary" id="tool-save" type="button" data-en="Save on this device" data-hi="इस डिवाइस पर सहेजें">Save on this device</button><button class="secondary" id="tool-export-one" type="button" data-en="Export this tool" data-hi="यह टूल निर्यात करें">Export this tool</button></div><p class="tool-result" id="tool-workspace-status" role="status" aria-live="polite"></p></section>
+      <div class="actions"><button class="secondary" id="tool-export-all" type="button" data-en="Export all toolkit notes" data-hi="सभी टूल नोट निर्यात करें">Export all toolkit notes</button><button class="secondary" id="tool-clear-all" type="button" data-en="Clear saved toolkit notes" data-hi="सहेजे गए सभी नोट साफ़ करें">Clear saved toolkit notes</button></div>
+      <p class="note small-note" data-en="Medical safety: these tools support education and organization; they do not diagnose conditions or replace prenatal care. For serious symptoms or reduced/changed fetal movement, contact your maternity team promptly. Never start, stop or change medication based only on this website." data-hi="चिकित्सकीय सुरक्षा: ये टूल जानकारी और व्यवस्था में मदद करते हैं; निदान या प्रसवपूर्व देखभाल का विकल्प नहीं हैं। गंभीर लक्षण या बच्चे की हलचल में बदलाव होने पर तुरंत मातृत्व टीम से संपर्क करें। केवल इस वेबसाइट के आधार पर दवा शुरू, बंद या न बदलें।">Medical safety: these tools support education and organization; they do not diagnose conditions or replace prenatal care. For serious symptoms or reduced/changed fetal movement, contact your maternity team promptly. Never start, stop or change medication based only on this website.</p>
     </section>
 
     <section class="card privacy-card" id="privacy" aria-labelledby="privacy-title">
