@@ -88,18 +88,26 @@ $('tool-export-all').onclick=()=>download('pregnancy-toolkit-local-notes.json',J
 $('tool-import-all').onclick=async()=>{
  const status=$('tool-backup-status'),picker=$('tool-import-file'),file=picker.files&&picker.files[0],hi=document.documentElement.lang==='hi';
  const say=(en,hindi)=>{status.textContent=hi?hindi:en};
- if(!file){say('Choose a toolkit JSON backup file first.','पहले टूलकिट की JSON बैकअप फ़ाइल चुनें।');return}
+ if(!file){say('Choose a toolkit or individual-tool JSON export first.','पहले टूलकिट या किसी टूल की JSON फ़ाइल चुनें।');return}
  if(file.size>2*1024*1024){say('This file is too large. Choose a backup smaller than 2 MB.','यह फ़ाइल बहुत बड़ी है। 2 MB से छोटी बैकअप फ़ाइल चुनें।');return}
  let backup;try{backup=JSON.parse(await file.text())}catch(e){say('That file is not valid JSON. Nothing was changed.','यह सही JSON फ़ाइल नहीं है। कोई बदलाव नहीं किया गया।');return}
- const plain=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
- if(!plain(backup)||!plain(backup.records)||!plain(backup.checks)){say('This does not look like a toolkit backup. Nothing was changed.','यह टूलकिट बैकअप नहीं लगता। कोई बदलाव नहीं किया गया।');return}
- const known=new Set(tools.map(t=>t.id)),records={},checks={};let skipped=0;
- for(const [id,record] of Object.entries(backup.records)){if(!known.has(id)){skipped++;continue}if(!plain(record)){say('Backup contains an invalid saved entry. Nothing was changed.','बैकअप में अमान्य सेव की गई प्रविष्टि है। कोई बदलाव नहीं किया गया।');return}records[id]=record}
- for(const [key,value] of Object.entries(backup.checks)){const id=key.slice(0,key.lastIndexOf('-'));if(!key.includes('-')||!known.has(id)||typeof value!=='boolean'){skipped++;continue}checks[key]=value}
- if(!window.confirm(hi?'यह इस ब्राउज़र के मौजूदा टूल नोट और चेकलिस्ट प्रगति को चुने गए बैकअप से बदल देगा। आगे बढ़ें?':'Restoring replaces the current toolkit notes and checklist progress in this browser. Continue?'))return;
+ const plain=v=>v!==null&&typeof v==='object'&&!Array.isArray(v),known=new Map(tools.map(t=>[t.id,t]));
+ let records={},checks={},single=false,skipped=0,replaceAll=false;
+ if(plain(backup)&&plain(backup.records)&&plain(backup.checks)){
+   replaceAll=true;
+   for(const [id,record] of Object.entries(backup.records)){if(!known.has(id)){skipped++;continue}if(!plain(record)){say('Backup contains an invalid saved entry. Nothing was changed.','बैकअप में अमान्य सेव की गई प्रविष्टि है। कोई बदलाव नहीं किया गया।');return}records[id]=record}
+   for(const [key,value] of Object.entries(backup.checks)){const split=key.lastIndexOf('-'),id=key.slice(0,split);if(split<1||!known.has(id)||typeof value!=='boolean'){skipped++;continue}checks[key]=value}
+ }else if(plain(backup)&&typeof backup.tool==='string'&&typeof backup.category==='string'&&plain(backup.record)&&plain(backup.checks)){
+   const id=backup.tool.toLowerCase().replace(/[^a-z0-9]+/g,'-'),tool=known.get(id);
+   if(!tool||tool.title!==backup.tool||tool.category!==backup.category){say('This individual export does not match a known toolkit item. Nothing was changed.','यह व्यक्तिगत निर्यात किसी ज्ञात टूल से मेल नहीं खाता। कोई बदलाव नहीं किया गया।');return}
+   single=true;records=Object.assign({},state.records);checks=Object.assign({},state.checks);records[id]=backup.record;
+   for(const key of Object.keys(checks))if(key.startsWith(id+'-'))delete checks[key];
+   for(const [key,value] of Object.entries(backup.checks)){const split=key.lastIndexOf('-'),checkId=key.slice(0,split);if(split<1||checkId!==id||typeof value!=='boolean'){skipped++;continue}checks[key]=value}
+ }else{say('This does not look like a toolkit backup or individual-tool export. Nothing was changed.','यह टूलकिट बैकअप या व्यक्तिगत टूल निर्यात नहीं लगता। कोई बदलाव नहीं किया गया।');return}
+ if(!window.confirm(hi?(single?'यह इस टूल के मौजूदा नोट और चेकलिस्ट प्रगति को फ़ाइल से बदल देगा। आगे बढ़ें?':'यह इस ब्राउज़र के सभी टूल नोट और चेकलिस्ट प्रगति को बैकअप से बदल देगा। आगे बढ़ें?'):(single?'Restoring replaces the saved notes and checklist progress for this tool. Continue?':'Restoring replaces all saved toolkit notes and checklist progress in this browser. Continue?')))return;
  const oldRecords=state.records,oldChecks=state.checks;state.records=records;state.checks=checks;
  if(!persist()){state.records=oldRecords;state.checks=oldChecks;say('Browser storage could not save this backup. Existing data was kept.','ब्राउज़र स्टोरेज बैकअप सेव नहीं कर सका। पुराना डेटा सुरक्षित रखा गया।');return}
- say('Backup restored on this device.'+(skipped?' Skipped '+skipped+' unsupported item(s).':''),'बैकअप इस डिवाइस पर बहाल हो गया।'+(skipped?' '+skipped+' असमर्थित आइटम छोड़े गए।':''));
+ say((single?'Individual tool restored on this device.':'Toolkit backup restored on this device.')+(skipped?' Skipped '+skipped+' unsupported item(s).':''),(single?'व्यक्तिगत टूल इस डिवाइस पर बहाल हो गया।':'टूलकिट बैकअप इस डिवाइस पर बहाल हो गया।')+(skipped?' '+skipped+' असमर्थित आइटम छोड़े गए।':''));
  if(state.active)open(state.active);
 };
 $('tool-clear-all').onclick=()=>{if(!confirm('Clear all saved toolkit entries and checklist states from this browser? Export first if needed.'))return;state.records={};state.checks={};try{localStorage.removeItem(KEY)}catch(e){}$('tool-workspace-status').textContent='Saved toolkit notes cleared from this browser.';if(state.active)open(state.active)};
