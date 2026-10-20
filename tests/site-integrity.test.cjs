@@ -61,7 +61,7 @@ test('page metadata supports sharing and describes the browser-only privacy mode
   assert.match(html, /<meta property="og:title"/);
   assert.match(html, /<meta property="og:description"/);
   assert.match(html, /Browser-based|browser-based/i);
-  assert.match(html, /Version 2\.5/);
+  assert.match(html, /Version 2\.6/);
 });
 
 test('section navigation has an accessible active-state implementation', () => {
@@ -98,6 +98,14 @@ test('toolkit backups can be restored with validation and without losing data on
   assert.match(toolkit, /unsupported item/);
 });
 
+test('individual-tool exports can be restored without overwriting other tools', () => {
+  const toolkit = read('assets/js/expanded-toolkit.js');
+  assert.match(toolkit, /typeof backup\.tool==='string'.*plain\(backup\.record\)/);
+  assert.match(toolkit, /records=Object\.assign\(\{\},state\.records\)/);
+  assert.match(toolkit, /tool\.title!==backup\.tool\|\|tool\.category!==backup\.category/);
+  assert.match(toolkit, /Individual tool restored on this device/);
+  assert.match(toolkit, /Toolkit backup restored on this device/);
+});
 test('installed app manifest uses the current toolkit name and local entry point', () => {
   const manifest = JSON.parse(read('manifest.webmanifest'));
   assert.equal(manifest.name, 'Pregnancy Care Toolkit');
