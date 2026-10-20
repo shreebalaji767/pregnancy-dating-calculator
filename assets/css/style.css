@@ -465,3 +465,173 @@ button.secondary,
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Pregnancy planning tools — calmer, clearer card layout */
+#planning {
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--brand-soft) 72%, transparent), transparent 34%),
+    var(--card);
+}
+#planning > .help {
+  max-width: 78ch;
+  margin: 4px 0 22px;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brand);
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: .94rem;
+}
+#planning .planning-grid {
+  gap: 18px;
+  align-items: stretch;
+}
+#planning .planning-grid > .tool-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(16px, 2vw, 22px);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--card);
+  box-shadow: 0 4px 14px rgba(23, 59, 75, .045);
+  min-width: 0;
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+#planning .planning-grid > .tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 18px;
+  width: 42px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: var(--brand);
+}
+#planning .planning-grid > .tool-card:hover {
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--line));
+  box-shadow: var(--shadow);
+}
+#planning .planning-grid .tool-card h3 {
+  margin: 3px 0 0;
+  font-size: 1.08rem;
+  line-height: 1.35;
+  letter-spacing: -.015em;
+}
+#planning .planning-grid .tool-card > .help {
+  margin: 0;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+#planning .checklist {
+  gap: 8px;
+  margin: 5px 0 8px;
+}
+#planning .checklist label {
+  align-items: center;
+  min-height: 48px;
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  background: var(--bg);
+  line-height: 1.45;
+  transition: border-color .15s ease, background .15s ease;
+}
+#planning .checklist label:hover {
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--line));
+}
+#planning .checklist label:has(input:checked) {
+  border-color: color-mix(in srgb, var(--brand) 48%, var(--line));
+  background: var(--brand-soft);
+}
+#planning .checklist input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+#planning .checklist input:focus-visible {
+  outline: 3px solid #e7a93b;
+  outline-offset: 3px;
+}
+#planning .planning-grid .field {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 3px;
+}
+#planning .planning-grid .field label {
+  font-size: .9rem;
+  font-weight: 700;
+}
+#planning .planning-grid input[type="text"],
+#planning .planning-grid input[type="date"],
+#planning .planning-grid input[type="time"],
+#planning .planning-grid textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+}
+#planning .planning-grid textarea {
+  min-height: 88px;
+  line-height: 1.5;
+}
+#planning .planning-grid .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+#planning .planning-grid .actions button {
+  min-height: 42px;
+  flex: 1 1 145px;
+}
+#planning .timer-display {
+  margin: 3px 0;
+  padding: 20px 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--bg);
+  font-variant-numeric: tabular-nums;
+}
+#planning #contraction-status,
+#planning #birth-status {
+  margin: 0;
+}
+#planning .appointment-list {
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+#planning .appointment-list li:not(.empty-state) {
+  border-radius: 11px;
+  background: var(--bg);
+  padding: 12px;
+}
+#planning .appointment-list .empty-state {
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: 11px;
+  color: var(--muted);
+  text-align: center;
+}
+#planning .planning-grid .tool-result:empty {
+  display: none;
+}
+@media (max-width: 760px) {
+  #planning .planning-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+  #planning .planning-grid > .tool-card {
+    padding: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #planning .planning-grid > .tool-card,
+  #planning .checklist label {
+    transition: none;
+  }
+}
