@@ -3,6 +3,9 @@
   const $ = id => document.getElementById(id);
   const modes = ['usg', 'lmp', 'ga'];
   const today = new Date();
+  try {
+    if (localStorage.getItem('pregnancy-dating-theme') === 'dark') document.body.classList.add('dark');
+  } catch (_) { /* Storage can be unavailable in private browsing. */ }
   const todayISO = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
   $('usg-date').value = todayISO;
   $('ga-date').value = todayISO;
@@ -86,10 +89,13 @@
     if (mode === 'lmp') { $('lmp-date').value = ''; $('ref-date').value = todayISO; }
   }));
   $('print').addEventListener('click', () => window.print());
+  $('theme-toggle').setAttribute('aria-pressed', String(document.body.classList.contains('dark')));
+  $('theme-toggle').textContent = document.body.classList.contains('dark') ? '☀ Light mode' : '☾ Dark mode';
   $('theme-toggle').addEventListener('click', () => {
     const enabled = document.body.classList.toggle('dark');
     $('theme-toggle').setAttribute('aria-pressed', String(enabled));
     $('theme-toggle').textContent = enabled ? '☀ Light mode' : '☾ Dark mode';
+    try { localStorage.setItem('pregnancy-dating-theme', enabled ? 'dark' : 'light'); } catch (_) { /* Theme still works for this session. */ }
   });
   $('copy-results').addEventListener('click', async () => {
     const summary = [
