@@ -61,7 +61,7 @@ test('page metadata supports sharing and describes the browser-only privacy mode
   assert.match(html, /<meta property="og:title"/);
   assert.match(html, /<meta property="og:description"/);
   assert.match(html, /Browser-based|browser-based/i);
-  assert.match(html, /Version 2\.6/);
+  assert.match(html, /Version 2\.7/);
 });
 
 test('section navigation has an accessible active-state implementation', () => {
@@ -115,11 +115,14 @@ test('installed app manifest uses the current toolkit name and local entry point
   assert.ok(manifest.description.includes('browser-based'));
 });
 
-test('complete toolkit lists every tool by default without a search field and groups cards by category', () => {
-  assert.doesNotMatch(html, /id="tool-search"|Search all tools/);
-  assert.match(html, /All categories \(273 tools\)/);
+test('complete toolkit displays every tool without a search field, filter dropdown or hidden category state', () => {
+  assert.doesNotMatch(html, /id="tool-search"|Search all tools|id="tool-category"|<select[^>]*tool-category/i);
+  assert.match(html, /All 273 tools are displayed together/);
+  assert.match(html, /Nothing is filtered or hidden/);
   const toolkit = read('assets/js/expanded-toolkit.js');
-  assert.match(toolkit, /const categories=cat==='all'\?groups\.map/);
+  assert.doesNotMatch(toolkit, /tool-category|tools\.filter\(t=>cat/);
+  assert.match(toolkit, /const list=tools/);
+  assert.match(toolkit, /for\(const group of groups\)/);
   assert.match(toolkit, /tool-library-group-heading/);
   assert.match(toolkit, /Showing all '\+list\.length\+' tools across '\+groups\.length\+' categories/);
 });
