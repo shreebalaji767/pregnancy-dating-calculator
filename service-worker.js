@@ -2,7 +2,7 @@
 
 // Bump this version whenever an app asset changes so installed PWAs refresh.
 const CACHE_PREFIX = 'pregnancy-dating-';
-const CACHE_NAME = CACHE_PREFIX + 'v16';
+const CACHE_NAME = CACHE_PREFIX + 'v17';
 const APP_FILES = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ const APP_FILES = [
   './assets/js/calculator.js',
   './assets/js/app.js',
   './assets/js/clinical-tools.js',
+  './assets/js/expanded-toolkit.js',
   './assets/icons/logo.svg',
   './assets/icons/favicon.svg'
 ];
