@@ -1,6 +1,6 @@
 'use strict';
 const CACHE_PREFIX = 'pregnancy-dating-';
-const CACHE_NAME = CACHE_PREFIX + 'v9';
+const CACHE_NAME = CACHE_PREFIX + 'v10';
 const APP_FILES = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const APP_FILES = [
   './assets/js/date-utils.js',
   './assets/js/calculator.js',
   './assets/js/app.js',
+  './assets/js/clinical-tools.js',
   './assets/icons/logo.svg',
   './assets/icons/favicon.svg'
 ];
