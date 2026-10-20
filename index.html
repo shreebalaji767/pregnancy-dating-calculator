@@ -17,6 +17,7 @@
   <script defer src="assets/js/date-utils.js"></script>
   <script defer src="assets/js/calculator.js"></script>
   <script defer src="assets/js/app.js"></script>
+  <script defer src="assets/js/clinical-tools.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content" data-en="Skip to main content" data-hi="मुख्य सामग्री पर जाएँ">Skip to main content</a>
@@ -45,6 +46,7 @@
       <a href="#planner" data-en="Visit planner" data-hi="जाँच योजना">Visit planner</a>
       <a href="#calculators" data-en="Other calculators" data-hi="अन्य कैलकुलेटर">Other calculators</a>
       <a href="#planning" data-en="Planning tools" data-hi="योजना टूल">Planning tools</a>
+      <a href="#clinical-tools" data-en="Clinical utility" data-hi="क्लिनिकल टूल">Clinical utility</a>
     </nav>
 
     <section class="card" id="dating" aria-labelledby="dating-title">
@@ -244,6 +246,67 @@
       </div>
       <div class="actions"><button class="secondary" id="clear-planning-data" type="button" data-en="Clear all saved planning data" data-hi="सभी सहेजा गया योजना डेटा साफ़ करें">Clear all saved planning data</button></div>
       <p class="note small-note" data-en="Local storage is not encrypted by this website. Anyone with access to this browser profile may be able to see saved entries. Clear them before sharing a device." data-hi="इस वेबसाइट द्वारा स्थानीय स्टोरेज एन्क्रिप्ट नहीं किया जाता। इस ब्राउज़र प्रोफ़ाइल तक पहुँच रखने वाला कोई व्यक्ति सहेजी गई जानकारी देख सकता है। डिवाइस साझा करने से पहले इसे साफ़ करें।">Local storage is not encrypted by this website. Anyone with access to this browser profile may be able to see saved entries. Clear them before sharing a device.</p>
+    </section>
+
+    <section class="card" id="clinical-tools" aria-labelledby="clinical-tools-title">
+      <div class="section-heading">
+        <div><p class="kicker" data-en="07 / OBSTETRIC CLINICAL UTILITY" data-hi="07 / प्रसूति क्लिनिकल टूल">07 / OBSTETRIC CLINICAL UTILITY</p><h2 id="clinical-tools-title" data-en="Clinical quick tools" data-hi="क्लिनिकल क्विक टूल">Clinical quick tools</h2></div>
+        <span class="section-mark" aria-hidden="true">07</span>
+      </div>
+      <p class="help" data-en="For trained clinical users and supervised education. Enter only the minimum information needed; these tools run locally in this browser and do not save or upload entries." data-hi="प्रशिक्षित क्लिनिकल उपयोगकर्ताओं और पर्यवेक्षित शिक्षा के लिए। केवल आवश्यक जानकारी दर्ज करें; ये टूल इसी ब्राउज़र में चलते हैं और जानकारी सहेजते या अपलोड नहीं करते।">For trained clinical users and supervised education. Enter only the minimum information needed; these tools run locally in this browser and do not save or upload entries.</p>
+      <div class="clinical-grid">
+        <article class="tool-card">
+          <h3 data-en="Mean arterial pressure (MAP)" data-hi="औसत धमनी रक्तचाप (MAP)">Mean arterial pressure (MAP)</h3>
+          <p class="help" data-en="Enter systolic and diastolic blood pressure in mmHg. Formula: (SBP + 2 × DBP) ÷ 3." data-hi="सिस्टोलिक और डायस्टोलिक रक्तचाप mmHg में दर्ज करें। सूत्र: (SBP + 2 × DBP) ÷ 3।">Enter systolic and diastolic blood pressure in mmHg. Formula: (SBP + 2 × DBP) ÷ 3.</p>
+          <div class="form-grid">
+            <div class="field"><label for="map-sbp" data-en="Systolic BP (mmHg)" data-hi="सिस्टोलिक BP (mmHg)">Systolic BP (mmHg)</label><input id="map-sbp" type="number" min="40" max="300" step="1" inputmode="numeric" placeholder="e.g. 120"></div>
+            <div class="field"><label for="map-dbp" data-en="Diastolic BP (mmHg)" data-hi="डायस्टोलिक BP (mmHg)">Diastolic BP (mmHg)</label><input id="map-dbp" type="number" min="20" max="200" step="1" inputmode="numeric" placeholder="e.g. 80"></div>
+          </div>
+          <button class="primary" id="calc-map" type="button" data-en="Calculate MAP" data-hi="MAP निकालें">Calculate MAP</button>
+          <p class="tool-result" id="map-result" role="status" aria-live="polite"></p>
+          <p class="hint" data-en="MAP is a derived value, not a diagnosis or a substitute for interpreting the actual BP, symptoms, repeat measurements and clinical context. In pregnancy, BP ≥160 systolic or ≥110 diastolic requires urgent clinical assessment." data-hi="MAP एक गणितीय मान है, निदान नहीं। वास्तविक BP, लक्षण, दोबारा माप और क्लिनिकल संदर्भ का मूल्यांकन ज़रूरी है। गर्भावस्था में सिस्टोलिक BP ≥160 या डायस्टोलिक ≥110 पर तुरंत चिकित्सकीय मूल्यांकन आवश्यक है।">MAP is a derived value, not a diagnosis or a substitute for interpreting the actual BP, symptoms, repeat measurements and clinical context. In pregnancy, BP ≥160 systolic or ≥110 diastolic requires urgent clinical assessment.</p>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="APGAR score worksheet" data-hi="APGAR स्कोर वर्कशीट">APGAR score worksheet</h3>
+          <p class="help" data-en="Select the observed score for each of the five components. Use at the clinically appropriate time points (commonly 1 and 5 minutes after birth) and follow neonatal resuscitation protocols." data-hi="पाँचों घटकों के लिए देखे गए स्कोर चुनें। उपयुक्त समय पर (आमतौर पर जन्म के 1 और 5 मिनट बाद) उपयोग करें और नवजात पुनर्जीवन प्रोटोकॉल का पालन करें।">Select the observed score for each of the five components. Use at the clinically appropriate time points (commonly 1 and 5 minutes after birth) and follow neonatal resuscitation protocols.</p>
+          <div class="field"><label for="apgar-time" data-en="Assessment time" data-hi="मूल्यांकन समय">Assessment time</label><select id="apgar-time"><option value="1">1 minute</option><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="15">15 minutes</option><option value="20">20 minutes</option></select></div>
+          <div class="field"><label for="apgar-appearance" data-en="Appearance (colour)" data-hi="Appearance (रंग)">Appearance (colour)</label><select id="apgar-appearance"><option value="0">0 — Blue/pale</option><option value="1">1 — Body pink, extremities blue</option><option value="2">2 — Completely pink</option></select></div>
+          <div class="field"><label for="apgar-pulse" data-en="Pulse (heart rate)" data-hi="Pulse (हृदय गति)">Pulse (heart rate)</label><select id="apgar-pulse"><option value="0">0 — Absent</option><option value="1">1 — Below 100/min</option><option value="2">2 — 100/min or more</option></select></div>
+          <div class="field"><label for="apgar-grimace" data-en="Grimace (reflex response)" data-hi="Grimace (रिफ्लेक्स प्रतिक्रिया)">Grimace (reflex response)</label><select id="apgar-grimace"><option value="0">0 — No response</option><option value="1">1 — Grimace</option><option value="2">2 — Cough, sneeze or cry</option></select></div>
+          <div class="field"><label for="apgar-activity" data-en="Activity (muscle tone)" data-hi="Activity (मांसपेशियों का टोन)">Activity (muscle tone)</label><select id="apgar-activity"><option value="0">0 — Limp</option><option value="1">1 — Some flexion</option><option value="2">2 — Active movement</option></select></div>
+          <div class="field"><label for="apgar-respiration" data-en="Respiration" data-hi="Respiration (श्वसन)">Respiration</label><select id="apgar-respiration"><option value="0">0 — Absent</option><option value="1">1 — Slow/irregular</option><option value="2">2 — Good effort/cry</option></select></div>
+          <div class="actions"><button class="primary" id="calc-apgar" type="button" data-en="Calculate APGAR" data-hi="APGAR निकालें">Calculate APGAR</button><button class="secondary" id="reset-apgar" type="button" data-en="Reset" data-hi="रीसेट">Reset</button></div>
+          <p class="tool-result" id="apgar-result" role="status" aria-live="polite"></p>
+          <p class="hint" data-en="APGAR documents status; it does not predict an individual outcome and must never delay resuscitation or other urgent care." data-hi="APGAR स्थिति दर्ज करता है; यह व्यक्तिगत परिणाम की भविष्यवाणी नहीं करता और पुनर्जीवन या आपात देखभाल में कभी देरी नहीं करनी चाहिए।">APGAR documents status; it does not predict an individual outcome and must never delay resuscitation or other urgent care.</p>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Bishop score worksheet" data-hi="बिशप स्कोर वर्कशीट">Bishop score worksheet</h3>
+          <p class="help" data-en="For a trained clinician documenting a cervical examination. Select the examination findings; scoring conventions can vary by local protocol." data-hi="गर्भाशय ग्रीवा की जाँच दर्ज करने वाले प्रशिक्षित चिकित्सक के लिए। जाँच के निष्कर्ष चुनें; स्थानीय प्रोटोकॉल के अनुसार स्कोरिंग अलग हो सकती है।">For a trained clinician documenting a cervical examination. Select the examination findings; scoring conventions can vary by local protocol.</p>
+          <div class="field"><label for="bishop-dilation" data-en="Cervical dilation" data-hi="सर्विक्स का खुलाव">Cervical dilation</label><select id="bishop-dilation"><option value="0">Closed</option><option value="1">1–2 cm</option><option value="2">3–4 cm</option><option value="3">5 cm or more</option></select></div>
+          <div class="field"><label for="bishop-effacement" data-en="Effacement" data-hi="Effacement (पतलापन)">Effacement</label><select id="bishop-effacement"><option value="0">0–30%</option><option value="1">40–50%</option><option value="2">60–70%</option><option value="3">80% or more</option></select></div>
+          <div class="field"><label for="bishop-station" data-en="Fetal station" data-hi="भ्रूण स्टेशन">Fetal station</label><select id="bishop-station"><option value="0">−3</option><option value="1">−2</option><option value="2">−1 or 0</option><option value="3">+1 or +2</option></select></div>
+          <div class="field"><label for="bishop-consistency" data-en="Cervical consistency" data-hi="सर्विक्स की बनावट">Cervical consistency</label><select id="bishop-consistency"><option value="0">Firm</option><option value="1">Medium</option><option value="2">Soft</option></select></div>
+          <div class="field"><label for="bishop-position" data-en="Cervical position" data-hi="सर्विक्स की स्थिति">Cervical position</label><select id="bishop-position"><option value="0">Posterior</option><option value="1">Mid-position</option><option value="2">Anterior</option></select></div>
+          <div class="actions"><button class="primary" id="calc-bishop" type="button" data-en="Calculate Bishop score" data-hi="बिशप स्कोर निकालें">Calculate Bishop score</button><button class="secondary" id="reset-bishop" type="button" data-en="Reset" data-hi="रीसेट">Reset</button></div>
+          <p class="tool-result" id="bishop-result" role="status" aria-live="polite"></p>
+          <p class="hint" data-en="The score is only one input to induction decisions. It does not determine management by itself; consider parity, gestation, indication, contraindications, maternal/fetal status and local guidance." data-hi="यह स्कोर प्रसव प्रेरण के निर्णय का केवल एक हिस्सा है। निर्णय अकेले इस पर न लें; प्रसव इतिहास, गर्भावधि, कारण, निषेध, माँ/भ्रूण की स्थिति और स्थानीय दिशानिर्देश देखें।">The score is only one input to induction decisions. It does not determine management by itself; consider parity, gestation, indication, contraindications, maternal/fetal status and local guidance.</p>
+        </article>
+        <article class="tool-card">
+          <h3 data-en="Obstetric history (GTPAL)" data-hi="प्रसूति इतिहास (GTPAL)">Obstetric history (GTPAL)</h3>
+          <p class="help" data-en="Enter the documented counts. G = total pregnancies including the current pregnancy; T = term births; P = preterm births; A = pregnancy losses/abortions as defined by local convention; L = living children." data-hi="दर्ज संख्या भरें। G = वर्तमान गर्भावस्था सहित कुल गर्भ; T = टर्म जन्म; P = प्रीटर्म जन्म; A = स्थानीय परिभाषा के अनुसार गर्भ हानि/गर्भपात; L = जीवित बच्चे।">Enter the documented counts. G = total pregnancies including the current pregnancy; T = term births; P = preterm births; A = pregnancy losses/abortions as defined by local convention; L = living children.</p>
+          <div class="form-grid">
+            <div class="field"><label for="gtpal-g" data-en="Gravida (G)" data-hi="ग्रैविडा (G)">Gravida (G)</label><input id="gtpal-g" type="number" min="0" max="99" step="1" value="1"></div>
+            <div class="field"><label for="gtpal-t" data-en="Term births (T)" data-hi="टर्म जन्म (T)">Term births (T)</label><input id="gtpal-t" type="number" min="0" max="99" step="1" value="0"></div>
+            <div class="field"><label for="gtpal-p" data-en="Preterm births (P)" data-hi="प्रीटर्म जन्म (P)">Preterm births (P)</label><input id="gtpal-p" type="number" min="0" max="99" step="1" value="0"></div>
+            <div class="field"><label for="gtpal-a" data-en="Abortions / losses (A)" data-hi="गर्भपात / हानि (A)">Abortions / losses (A)</label><input id="gtpal-a" type="number" min="0" max="99" step="1" value="0"></div>
+            <div class="field"><label for="gtpal-l" data-en="Living children (L)" data-hi="जीवित बच्चे (L)">Living children (L)</label><input id="gtpal-l" type="number" min="0" max="99" step="1" value="0"></div>
+          </div>
+          <div class="actions"><button class="primary" id="calc-gtpal" type="button" data-en="Build summary" data-hi="सारांश बनाएँ">Build summary</button><button class="secondary" id="reset-gtpal" type="button" data-en="Reset" data-hi="रीसेट">Reset</button></div>
+          <p class="tool-result" id="gtpal-result" role="status" aria-live="polite"></p>
+          <p class="hint" data-en="This is a transcription aid, not a consistency check or replacement for the full obstetric history. Multiple gestation affects birth and living-child counts; confirm definitions and history locally." data-hi="यह जानकारी लिखने का सहायक है, पूर्ण इतिहास या संगति-जाँच का विकल्प नहीं। बहु-भ्रूण गर्भावस्था जन्म और जीवित बच्चों की संख्या को प्रभावित करती है; स्थानीय परिभाषाओं और इतिहास की पुष्टि करें।">This is a transcription aid, not a consistency check or replacement for the full obstetric history. Multiple gestation affects birth and living-child counts; confirm definitions and history locally.</p>
+        </article>
+      </div>
+      <div class="note"><strong data-en="Urgent obstetric warning" data-hi="तत्काल प्रसूति चेतावनी">Urgent obstetric warning</strong><span data-en=" Seek urgent maternity assessment for heavy bleeding, seizure, severe headache or visual changes, severe abdominal pain, chest pain or difficulty breathing, fever with serious illness, fluid leakage or labour concerns, or reduced/changed fetal movements. Do not use these calculators to decide whether to delay care." data-hi=" अधिक रक्तस्राव, दौरा, तेज सिरदर्द या दृष्टि में बदलाव, तेज पेट दर्द, सीने में दर्द या साँस की तकलीफ़, गंभीर बीमारी के साथ बुखार, पानी आना या प्रसव संबंधी चिंता, या भ्रूण की हलचल कम/बदलने पर तुरंत प्रसूति मूल्यांकन लें। देखभाल में देरी का निर्णय इन कैलकुलेटर से न लें।"> Seek urgent maternity assessment for heavy bleeding, seizure, severe headache or visual changes, severe abdominal pain, chest pain or difficulty breathing, fever with serious illness, fluid leakage or labour concerns, or reduced/changed fetal movements. Do not use these calculators to decide whether to delay care.</span></div>
     </section>
 
     <section class="card privacy-card" id="privacy" aria-labelledby="privacy-title">
