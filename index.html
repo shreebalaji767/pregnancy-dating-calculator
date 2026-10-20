@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#c64f83">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Pregnancy Dates">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/logo.svg">
+  <link rel="manifest" href="manifest.webmanifest">
   <meta name="description" content="A browser-based pregnancy dating calculator for estimating LMP, EDD, gestational age, and trimester from ultrasound or LMP.">
   <title>Pregnancy Dating Calculator | Clinical Utility</title>
   <link rel="stylesheet" href="assets/css/style.css">
@@ -14,10 +20,10 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <div class="header-tools"><button class="header-button" id="theme-toggle" type="button" aria-pressed="false">☾ Dark mode</button></div>
-      <div class="eyebrow">A thoughtful clinical utility</div>
-      <h1>Pregnancy Dating Calculator</h1>
+      <div class="header-tools"><button class="header-button install-button" id="install-app" type="button" hidden>＋ Install app</button><button class="header-button" id="theme-toggle" type="button" aria-pressed="false">☾ Dark mode</button></div>
+      <div class="brand-lockup"><img class="brand-logo" src="assets/icons/logo.svg" width="64" height="64" alt="Pregnancy Dating Calculator logo"><div><div class="eyebrow">A thoughtful clinical utility</div><h1>Pregnancy Dating Calculator</h1></div></div>
       <p class="subtitle">Simple, clear estimates for gestational age, last menstrual period, and estimated due date—all in one place.</p>
+      <p id="install-status" class="install-status" role="status" aria-live="polite"></p>
       <div class="header-chip"><span aria-hidden="true">♡</span> Private by design · No patient data is uploaded</div>
     </div>
   </header>
