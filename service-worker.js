@@ -2,7 +2,7 @@
 
 // Bump this version whenever an app asset changes so installed PWAs refresh.
 const CACHE_PREFIX = 'pregnancy-dating-';
-const CACHE_NAME = CACHE_PREFIX + 'v21';
+const CACHE_NAME = CACHE_PREFIX + 'v22';
 const APP_FILES = [
   './',
   './index.html',
