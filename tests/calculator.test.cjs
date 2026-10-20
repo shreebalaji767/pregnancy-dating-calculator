@@ -136,6 +136,7 @@ test('free planning tools are local-only and have export controls', () => {
   assert.match(html, /id="download-birth"/);
   assert.match(html, /id="add-appt"/);
   assert.match(html, /id="export-planning"/);
+  assert.match(html, /id="clear-planning-data"/);
   assert.match(app, /pregnancy-toolkit-planning-v1/);
   assert.match(app, /function downloadText\(/);
   assert.match(app, /function initializePlanningTools\(/);
