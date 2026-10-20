@@ -449,6 +449,16 @@
       planningState.birth = readBirthFields();
       downloadText('pregnancy-planning-notes.txt', planningExportText());
     });
+    on('clear-planning-data', 'click', () => {
+      if (!window.confirm(t('Clear all saved checklists, birth preferences and appointments from this browser?', 'इस ब्राउज़र से सभी सहेजी गई चेकलिस्ट, प्रसव प्राथमिकताएँ और अपॉइंटमेंट हटाएँ?'))) return;
+      planningState = { checks: {}, birth: {}, appointments: [] };
+      document.querySelectorAll('[data-local-check]').forEach(input => { input.checked = false; });
+      $('birth-support').value = ''; $('birth-environment').value = ''; $('birth-feeding').value = ''; $('birth-other').value = '';
+      try { localStorage.removeItem(planningStorageKey); } catch (_) {}
+      renderAppointments();
+      $('birth-status').textContent = t('Saved planning data cleared from this browser.', 'इस ब्राउज़र से सहेजा गया योजना डेटा साफ़ कर दिया गया।');
+      $('appt-status').textContent = '';
+    });
   }
   initializePlanningTools();
 
