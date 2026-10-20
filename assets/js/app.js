@@ -378,7 +378,7 @@
       checked('bag-hygiene') + ' ' + t('Personal hygiene items and toiletries', 'व्यक्तिगत स्वच्छता की चीज़ें'),
       checked('bag-baby') + ' ' + t('Baby clothes, nappies and blanket', 'बच्चे के कपड़े, डायपर और कंबल'),
       checked('bag-charger') + ' ' + t('Phone and charger', 'फ़ोन और चार्जर'),
-      checked('bag-support') + ' ' + t('Support person's essentials and transport plan', 'सहायक व्यक्ति की ज़रूरतें और परिवहन योजना'),
+      checked('bag-support') + ' ' + t('Support person’s essentials and transport plan', 'सहायक व्यक्ति की ज़रूरतें और परिवहन योजना'),
       '',
       t('PREGNANCY PREPARATION CHECKLIST', 'गर्भावस्था तैयारी चेकलिस्ट'),
       checked('prep-care') + ' ' + t('Know whom to contact for routine and urgent concerns', 'सामान्य और तत्काल चिंता में किससे संपर्क करना है, जानें'),
