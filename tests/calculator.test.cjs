@@ -141,7 +141,7 @@ test('free planning tools are local-only and have export controls', () => {
   assert.match(html, /id="clear-contractions"/);
   assert.match(html, /id="movement-add"/);
   assert.match(html, /id="movement-reset"/);
-  assert.match(app, /function elapsedLabel\(/);
+  assert.match(app, /const elapsedLabel =/);
   assert.match(app, /contractionRows/);
   assert.match(app, /movementCount/);
   assert.match(html, /contact your maternity unit immediately/i);
