@@ -27,17 +27,20 @@
     return result(Dates.addDays(reference, -totalDays), reference, totalDays, 'Estimated from reference date and gestational age', 'GA');
   }
   // ACOG: EDD is 261 days after day-5 transfer, 263 days after day-3 transfer.
-  function fromIVF(transferDate, embryoAge) {
+  function fromIVF(transferDate, embryoAge, referenceValue) {
     const transfer = Dates.parseISO(transferDate);
-    if (!transfer || ![3, 5].includes(embryoAge)) throw new Error('Enter a valid embryo transfer date and select a day-3 or day-5 embryo.');
+    const reference = Dates.parseISO(referenceValue || transferDate);
+    if (!transfer || !reference || ![3, 5].includes(embryoAge)) throw new Error('Enter a valid embryo transfer date and select a day-3 or day-5 embryo.');
+    if (Dates.diffDays(reference, transfer) < 0) throw new Error('The reference date cannot be before the embryo transfer date.');
     const totalDaysAtTransfer = 14 + embryoAge;
     const lmp = Dates.addDays(transfer, -totalDaysAtTransfer);
-    const reference = transfer;
+    const totalDays = Dates.diffDays(reference, lmp);
+    if (totalDays > 315) throw new Error('The interval exceeds 45 weeks. Please confirm the dates with your fertility team.');
     return Object.freeze({
       lmp,
       edd: Dates.addDays(transfer, 280 - totalDaysAtTransfer),
       reference,
-      totalDays: totalDaysAtTransfer,
+      totalDays,
       basis: 'Estimated from embryo transfer date and embryo age; confirm with the fertility team',
       method: 'IVF day-' + embryoAge
     });
