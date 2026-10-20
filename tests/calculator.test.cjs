@@ -112,7 +112,7 @@ test('event binding is null-safe and the offline cache is versioned for the fix'
   assert.match(app, /if \(element\) element\.addEventListener\(eventName, handler, options\)/);
   assert.doesNotMatch(app, /\$\('[^']+'\)\.addEventListener\(/);
   assert.match(html, /name="mobile-web-app-capable" content="yes"/);
-  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v9'/);
+  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v10'/);
 });
 
 test('manifest and offline assets are wired correctly', () => {
@@ -151,4 +151,27 @@ test('free planning tools are local-only and have export controls', () => {
   assert.doesNotMatch(html, /<script[^>]+src=["']https?:\/\//i);
   assert.doesNotMatch(html, /<link[^>]+rel=["']stylesheet["'][^>]+href=["']https?:\/\//i);
   assert.doesNotMatch(html, /<link[^>]+href=["']https?:\/\/[^"']+["'][^>]+rel=["']stylesheet["']/i);
+});
+
+
+test('obstetric clinical utility tools are wired, local-only and syntax-safe', () => {
+  const html = load('index.html');
+  const clinical = load('assets/js/clinical-tools.js');
+  const sw = load('service-worker.js');
+  for (const id of [
+    'clinical-tools', 'map-sbp', 'map-dbp', 'calc-map', 'map-result',
+    'apgar-time', 'apgar-appearance', 'apgar-pulse', 'apgar-grimace',
+    'apgar-activity', 'apgar-respiration', 'calc-apgar', 'apgar-result',
+    'bishop-dilation', 'bishop-effacement', 'bishop-station',
+    'bishop-consistency', 'bishop-position', 'calc-bishop', 'bishop-result',
+    'gtpal-g', 'gtpal-t', 'gtpal-p', 'gtpal-a', 'gtpal-l', 'calc-gtpal', 'gtpal-result'
+  ]) assert.match(html, new RegExp('id="' + id + '"'), 'Missing clinical tool element: ' + id);
+  assert.match(html, /assets\/js\/clinical-tools\.js/);
+  assert.match(sw, /'\.\/assets\/js\/clinical-tools\.js'/);
+  assert.match(clinical, /\(sbp \+ 2 \* dbp\) \/ 3/);
+  assert.match(clinical, /Bishop score:/);
+  assert.match(clinical, /APGAR at /);
+  assert.match(clinical, /G' \+ g \+ ' T'/);
+  assert.doesNotMatch(clinical, /fetch\s*\(|XMLHttpRequest|https?:\/\//i);
+  assert.match(html, /no patient data is uploaded/i);
 });
