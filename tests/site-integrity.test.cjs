@@ -72,12 +72,21 @@ test('section navigation has an accessible active-state implementation', () => {
 
 test('service worker cache version is bumped and all core scripts are precached', () => {
   const worker = read('service-worker.js');
-  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v17'/);
+  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v18'/);
   for (const asset of ['./assets/css/style.css', './assets/js/date-utils.js', './assets/js/calculator.js', './assets/js/app.js', './assets/js/clinical-tools.js', './assets/js/expanded-toolkit.js']) {
     assert.ok(worker.includes(asset), 'Missing core precache asset: ' + asset);
   }
 });
 
+test('expanded toolkit exposes real calculator, tracker, checklist, guide, timer and counter behavior', () => {
+  const toolkit = read('assets/js/expanded-toolkit.js');
+  for (const feature of ['function calculator(', 'function checklistItems(', 'function trackerPlaceholder(', 'function guideIntro(', 'function guideActions(', 'Start timer', 'Pause timer', 'Add one', 'function save()']) {
+    assert.ok(toolkit.includes(feature), 'Missing functional toolkit behavior: ' + feature);
+  }
+  assert.match(toolkit, /localStorage\.setItem\(KEY/);
+  assert.match(toolkit, /function download\(/);
+  assert.match(toolkit, /contraction frequency/);
+});
 test('installed app manifest uses the current toolkit name and local entry point', () => {
   const manifest = JSON.parse(read('manifest.webmanifest'));
   assert.equal(manifest.name, 'Pregnancy Care Toolkit');
