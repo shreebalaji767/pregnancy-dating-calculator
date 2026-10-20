@@ -1,13 +1,13 @@
 {
   "name": "Pregnancy Dating Calculator",
   "short_name": "Pregnancy Dates",
-  "description": "Estimate pregnancy gestational age, LMP, and due date from ultrasound or menstrual dates.",
+  "description": "Browser-only pregnancy dating, IVF due date, milestone calendar, pregnancy guide, antenatal planning and BMI tools.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#fff8fb",
-  "theme_color": "#c64f83",
+  "background_color": "#f3f7f9",
+  "theme_color": "#155e75",
   "icons": [
     {
       "src": "assets/icons/logo.svg",
