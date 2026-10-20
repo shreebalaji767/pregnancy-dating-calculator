@@ -1,6 +1,6 @@
 'use strict';
 const CACHE_PREFIX = 'pregnancy-dating-';
-const CACHE_NAME = CACHE_PREFIX + 'v7';
+const CACHE_NAME = CACHE_PREFIX + 'v8';
 const APP_FILES = [
   './',
   './index.html',
