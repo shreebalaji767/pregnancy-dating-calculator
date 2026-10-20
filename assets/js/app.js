@@ -121,6 +121,7 @@
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   if (isStandalone) {
+    installButton.hidden = true;
     installStatus.textContent = 'App installed — you can open it from your home screen.';
   }
   window.addEventListener('beforeinstallprompt', event => {
