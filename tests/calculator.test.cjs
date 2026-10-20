@@ -47,6 +47,39 @@ test('reference-date dating calculates the estimated LMP', () => {
   assert.equal(result.totalDays, 265);
 });
 
+test('IVF dating uses embryo age and transfer date per ACOG formula', () => {
+  const day5 = Calculator.fromIVF('2026-10-20', 5, '2026-10-20');
+  assert.equal(Dates.toISO(day5.edd), '2027-07-08');
+  assert.equal(Dates.toISO(day5.lmp), '2026-10-01');
+  assert.equal(day5.totalDays, 19);
+  const day3 = Calculator.fromIVF('2026-10-20', 3, '2026-10-20');
+  assert.equal(Dates.toISO(day3.edd), '2027-07-10');
+  assert.equal(Dates.toISO(day3.lmp), '2026-10-03');
+  assert.equal(day3.totalDays, 17);
+});
+
+test('IVF dating calculates gestational age on a later reference date and rejects impossible inputs', () => {
+  const result = Calculator.fromIVF('2026-10-20', 5, '2026-10-27');
+  assert.equal(result.totalDays, 26);
+  assert.equal(Dates.formatGA(result.totalDays), '3 weeks 5 days');
+  assert.throws(() => Calculator.fromIVF('2026-10-20', 4, '2026-10-20'), /day-3 or day-5/);
+  assert.throws(() => Calculator.fromIVF('2026-10-20', 5, '2026-10-19'), /cannot be before/);
+});
+
+test('BMI calculator uses kg divided by metres squared and adult screening bands', () => {
+  assert.deepEqual(JSON.parse(JSON.stringify(Calculator.calculateBMI(64, 160))), { bmi: 25, category: 'Overweight' });
+  assert.equal(Calculator.calculateBMI(50, 160).category, 'Healthy weight');
+  assert.throws(() => Calculator.calculateBMI(0, 160), /plausible weight/);
+  assert.throws(() => Calculator.calculateBMI(60, 0), /plausible weight/);
+});
+
+test('date interval and milestone helpers return UTC-safe calendar dates', () => {
+  assert.equal(Calculator.dateInterval('2024-02-28', '2024-03-01'), 2);
+  assert.throws(() => Calculator.dateInterval('2026-01-02', '2026-01-01'), /end date/);
+  assert.equal(Dates.toISO(Calculator.milestoneDate('2026-01-01', 20, 0)), '2026-05-21');
+  assert.throws(() => Calculator.milestoneDate('2026-01-01', 46, 0), /valid LMP/);
+});
+
 test('calculator rejects invalid dates, reversed dates, and invalid gestational ages', () => {
   assert.throws(() => Calculator.fromUltrasound('2026-02-30', 10, 0), /valid scan date/);
   assert.throws(() => Calculator.fromUltrasound('2026-01-01', 10, 7), /valid scan date/);
@@ -55,24 +88,29 @@ test('calculator rejects invalid dates, reversed dates, and invalid gestational 
   assert.throws(() => Calculator.fromGestationalAge('', 10, 0), /valid reference date/);
 });
 
-test('site markup, manifest, and offline assets are wired correctly', () => {
+test('site exposes new tools, Hindi content, accessibility labels and PDF printing', () => {
   const html = load('index.html');
   assert.match(html, /id="install-app" type="button">/);
   assert.doesNotMatch(html, /type="button>/);
   assert.match(html, /name="viewport"/);
+  assert.match(html, /name="mobile-web-app-capable" content="yes"/);
   assert.match(html, /rel="manifest" href="manifest\.webmanifest"/);
-  assert.match(html, /assets\/icons\/favicon\.svg/);
+  assert.match(html, /data-hi="गर्भावस्था देखभाल टूलकिट"/);
+  for (const id of ['panel-ivf', 'milestones', 'guide', 'planner', 'calc-bmi', 'calc-interval', 'print', 'download-calendar', 'privacy']) assert.match(html, new RegExp('id="' + id + '"'));
+  const app = load('assets/js/app.js');
+  assert.match(app, /fromIVF/);
+  assert.match(app, /pregnancy-dating-language/);
+  assert.match(app, /text\/calendar/);
+  assert.match(app, /installButton && installStatus/);
+});
+
+test('manifest and offline assets are wired correctly', () => {
   const manifest = JSON.parse(load('manifest.webmanifest'));
   assert.equal(manifest.display, 'standalone');
   assert.ok(manifest.icons.length > 0);
   for (const asset of [
-    'assets/css/style.css',
-    'assets/js/date-utils.js',
-    'assets/js/calculator.js',
-    'assets/js/app.js',
-    'assets/icons/logo.svg',
-    'assets/icons/favicon.svg',
-    'manifest.webmanifest',
-    'service-worker.js'
+    'assets/css/style.css', 'assets/js/date-utils.js', 'assets/js/calculator.js',
+    'assets/js/app.js', 'assets/icons/logo.svg', 'assets/icons/favicon.svg',
+    'manifest.webmanifest', 'service-worker.js'
   ]) assert.ok(fs.existsSync(path.join(root, asset)), 'Missing asset: ' + asset);
 });
