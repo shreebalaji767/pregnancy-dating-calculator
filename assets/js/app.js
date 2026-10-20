@@ -343,6 +343,8 @@
   }
   function renderAppointments() {
     const list = $('appointment-list');
+    const count = $('appointment-count');
+    if (count) count.textContent = String(planningState.appointments.length);
     list.replaceChildren();
     const appointments = planningState.appointments.slice().sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
     if (!appointments.length) {
@@ -400,14 +402,26 @@
   }
   function initializePlanningTools() {
     readPlanningState();
+    const updatePlanningOverview = () => {
+      [['bag-', 'bag-progress-label', 'bag-progress', 'bag-progress-bar'], ['prep-', 'prep-progress-label', 'prep-progress', 'prep-progress-bar']].forEach(([prefix, labelId, trackId, barId]) => {
+        const inputs = Array.from(document.querySelectorAll('[data-local-check]')).filter(input => input.dataset.localCheck.startsWith(prefix));
+        const completed = inputs.filter(input => input.checked).length;
+        const label = $(labelId), track = $(trackId), bar = $(barId);
+        if (label) label.textContent = completed + ' / ' + inputs.length;
+        if (track) track.setAttribute('aria-valuenow', String(completed));
+        if (bar) bar.style.width = (inputs.length ? completed / inputs.length * 100 : 0) + '%';
+      });
+    };
     document.querySelectorAll('[data-local-check]').forEach(input => {
       input.checked = planningState.checks[input.dataset.localCheck] === true;
       input.addEventListener('change', () => {
         planningState.checks[input.dataset.localCheck] = input.checked;
         const ok = savePlanningState();
+        updatePlanningOverview();
         $('birth-status').textContent = ok ? '' : t('Could not save on this device; browser storage may be disabled or full.', 'इस डिवाइस पर सहेज नहीं सके; ब्राउज़र स्टोरेज बंद या भरा हो सकता है।');
       });
     });
+    updatePlanningOverview();
     [['reset-bag', 'bag-'], ['reset-prep', 'prep-']].forEach(([buttonId, prefix]) => on(buttonId, 'click', () => {
       document.querySelectorAll('[data-local-check]').forEach(input => {
         if (input.dataset.localCheck.startsWith(prefix)) {
@@ -415,6 +429,7 @@
         }
       });
       savePlanningState();
+      updatePlanningOverview();
     }));
     const savedBirth = planningState.birth || {};
     $('birth-support').value = savedBirth.support || '';
@@ -540,6 +555,7 @@
       if (!window.confirm(t('Clear all saved checklists, birth preferences and appointments from this browser?', 'इस ब्राउज़र से सभी सहेजी गई चेकलिस्ट, प्रसव प्राथमिकताएँ और अपॉइंटमेंट हटाएँ?'))) return;
       planningState = { checks: {}, birth: {}, appointments: [] };
       document.querySelectorAll('[data-local-check]').forEach(input => { input.checked = false; });
+      updatePlanningOverview();
       $('birth-support').value = ''; $('birth-environment').value = ''; $('birth-feeding').value = ''; $('birth-other').value = '';
       try { localStorage.removeItem(planningStorageKey); } catch (_) {}
       renderAppointments();
