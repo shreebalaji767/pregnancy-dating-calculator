@@ -72,7 +72,7 @@ test('section navigation has an accessible active-state implementation', () => {
 
 test('service worker cache version is bumped and all core scripts are precached', () => {
   const worker = read('service-worker.js');
-  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v21'/);
+  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v22'/);
   for (const asset of ['./assets/css/style.css', './assets/js/date-utils.js', './assets/js/calculator.js', './assets/js/app.js', './assets/js/clinical-tools.js', './assets/js/expanded-toolkit.js']) {
     assert.ok(worker.includes(asset), 'Missing core precache asset: ' + asset);
   }
@@ -94,4 +94,13 @@ test('installed app manifest uses the current toolkit name and local entry point
   assert.equal(manifest.start_url, './');
   assert.equal(manifest.scope, './');
   assert.ok(manifest.description.includes('browser-based'));
+});
+
+test('complete toolkit lists every tool by default without a search field and groups cards by category', () => {
+  assert.doesNotMatch(html, /id="tool-search"|Search all tools/);
+  assert.match(html, /All categories \(273 tools\)/);
+  const toolkit = read('assets/js/expanded-toolkit.js');
+  assert.match(toolkit, /const categories=cat==='all'\?groups\.map/);
+  assert.match(toolkit, /tool-library-group-heading/);
+  assert.match(toolkit, /Showing all '\+list\.length\+' tools across '\+groups\.length\+' categories/);
 });
