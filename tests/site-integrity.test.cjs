@@ -61,7 +61,7 @@ test('page metadata supports sharing and describes the browser-only privacy mode
   assert.match(html, /<meta property="og:title"/);
   assert.match(html, /<meta property="og:description"/);
   assert.match(html, /Browser-based|browser-based/i);
-  assert.match(html, /Version 2\.4/);
+  assert.match(html, /Version 2\\.5/);
 });
 
 test('section navigation has an accessible active-state implementation', () => {
@@ -87,6 +87,17 @@ test('expanded toolkit exposes real calculator, tracker, checklist, guide, timer
   assert.match(toolkit, /function download\(/);
   assert.match(toolkit, /contraction frequency/);
 });
+test('toolkit backups can be restored with validation and without losing data on storage failure', () => {
+  assert.match(html, /id="tool-import-file" type="file" accept="application\/json,\.json"/);
+  assert.match(html, /id="tool-import-all"/);
+  const toolkit = read('assets/js/expanded-toolkit.js');
+  assert.match(toolkit, /file\.size>2\*1024\*1024/);
+  assert.match(toolkit, /JSON\.parse\(await file\.text\(\)\)/);
+  assert.match(toolkit, /window\.confirm\(/);
+  assert.match(toolkit, /if\(!persist\(\)\)\{state\.records=oldRecords;state\.checks=oldChecks/);
+  assert.match(toolkit, /unsupported item/);
+});
+
 test('installed app manifest uses the current toolkit name and local entry point', () => {
   const manifest = JSON.parse(read('manifest.webmanifest'));
   assert.equal(manifest.name, 'Pregnancy Care Toolkit');
