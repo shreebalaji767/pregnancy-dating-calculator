@@ -72,7 +72,7 @@ test('section navigation has an accessible active-state implementation', () => {
 
 test('service worker cache version is bumped and all core scripts are precached', () => {
   const worker = read('service-worker.js');
-  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v20'/);
+  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v21'/);
   for (const asset of ['./assets/css/style.css', './assets/js/date-utils.js', './assets/js/calculator.js', './assets/js/app.js', './assets/js/clinical-tools.js', './assets/js/expanded-toolkit.js']) {
     assert.ok(worker.includes(asset), 'Missing core precache asset: ' + asset);
   }
