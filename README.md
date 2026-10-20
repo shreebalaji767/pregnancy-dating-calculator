@@ -14,8 +14,10 @@ A responsive, browser-only obstetric utility site for pregnancy dating, IVF tran
 - **Privacy-minded:** all calculations and calendar generation run in the browser. No patient database, accounts, or server-side storage are implemented.
 - **PWA support:** install prompt where supported, iOS installation instructions, offline caching and dark mode.
 - **Accessibility:** skip link, labeled controls, keyboard-operated tabs, focus visibility, status/error announcements and reduced-motion support.
+- **Planning tools:** hospital-bag checklist, pregnancy preparation checklist, birth-preferences draft, appointment tracker, and local text exports. Checklist state and saved notes remain in browser local storage on the device; they are not uploaded. Local storage is not encrypted, so avoid patient identifiers and shared-device use.
+- **No alerts or reminders sent by a server:** the appointment tracker is a simple saved list only. It does not send notifications or contact a calendar service.
 - **No build step or third-party runtime dependencies.**
-- **No paid services or external integrations:** no paid/free APIs, AI services, analytics, ads, tracking, remote fonts, CDNs, external JavaScript libraries, accounts, or backend calls. Core calculations run locally in the browser; the service worker caches only this repository's own files. Clinical-reference URLs below are documentation links only and are not loaded by the app.
+- **No paid services or external integrations:** no paid/free APIs, AI services, analytics, ads, tracking, remote fonts, CDNs, external JavaScript libraries, accounts, or backend calls. The website contains no outbound clinical-reference links; source names are shown as plain text. Core calculations run locally in the browser; the service worker caches only this repository's own files. Clinical-reference URLs below are documentation links only and are not loaded by the app.
 - **No usage fees from app features:** printing/PDF uses the browser's built-in print dialog, and calendar export is generated locally. GitHub Pages is the static hosting provider; hosting is separate from runtime APIs and any GitHub account/hosting terms still apply.
 
 ## Clinical calculation notes
