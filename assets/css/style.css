@@ -236,3 +236,17 @@ button:disabled { cursor: not-allowed; opacity: .5; }
 @media print {
   #planning { display: none !important; }
 }
+
+/* Session-only timing tools */
+.timer-display {
+  font-size: clamp(2.4rem, 6vw, 3.5rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 750;
+  letter-spacing: .04em;
+  line-height: 1.15;
+  margin: 14px 0;
+  text-align: center;
+  color: var(--brand);
+}
+#contraction-list li { justify-content: flex-start; }
+#contraction-list li span { font-variant-numeric: tabular-nums; }
