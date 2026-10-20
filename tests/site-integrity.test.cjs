@@ -55,3 +55,25 @@ test('planning overview exposes progress elements and live update hooks', () => 
   assert.match(css, /#planning \.overview-stats/);
   assert.match(css, /#planning \.overview-track span/);
 });
+
+test('page metadata supports sharing and describes the browser-only privacy model', () => {
+  assert.match(html, /<meta name="description"/);
+  assert.match(html, /<meta property="og:title"/);
+  assert.match(html, /<meta property="og:description"/);
+  assert.match(html, /Browser-based|browser-based/i);
+  assert.match(html, /Version 2\.4/);
+});
+
+test('section navigation has an accessible active-state implementation', () => {
+  assert.match(html, /class="section-nav"/);
+  assert.match(appJs, /IntersectionObserver/);
+  assert.match(appJs, /aria-current', 'location'/);
+});
+
+test('service worker cache version is bumped and all core scripts are precached', () => {
+  const worker = read('service-worker.js');
+  assert.match(worker, /CACHE_NAME = CACHE_PREFIX \+ 'v15'/);
+  for (const asset of ['./assets/css/style.css', './assets/js/date-utils.js', './assets/js/calculator.js', './assets/js/app.js', './assets/js/clinical-tools.js']) {
+    assert.ok(worker.includes(asset), 'Missing core precache asset: ' + asset);
+  }
+});
