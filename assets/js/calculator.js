@@ -49,7 +49,8 @@
     if (!Number.isFinite(weightKg) || weightKg <= 0 || weightKg > 500 || !Number.isFinite(heightCm) || heightCm < 50 || heightCm > 250) {
       throw new Error('Enter a plausible weight in kg and height in cm.');
     }
-    const bmi = weightKg / Math.pow(heightCm / 100, 2);
+    // Round floating-point noise at the calculation boundary (e.g. 64 kg / 1.6 m² = 25).
+    const bmi = Math.round((weightKg / Math.pow(heightCm / 100, 2)) * 1e10) / 1e10;
     let category = 'Obesity';
     if (bmi < 18.5) category = 'Underweight';
     else if (bmi < 25) category = 'Healthy weight';
