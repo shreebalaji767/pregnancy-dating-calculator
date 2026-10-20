@@ -40,6 +40,7 @@
     });
     if (currentResult) render(currentResult, false);
     updateGuide();
+    if (typeof renderAppointments === 'function') renderAppointments();
   }
   $('usg-date').value = todayISO;
   $('ga-date').value = todayISO;
