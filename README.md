@@ -10,6 +10,7 @@ A responsive, browser-only obstetric utility site for pregnancy dating, IVF tran
 - **Week-by-week guide:** general educational information in English and Hindi. It is not a fetal-growth assessment or individualized medical advice.
 - **Antenatal visit planner:** example planning windows only. It explicitly asks clinicians to adapt the plan to current local guidelines and the individual's needs.
 - **Additional calculators:** adult BMI screening calculation, date interval and gestational age on a selected date.
+- **Obstetric clinical quick tools:** MAP calculation from entered BP, APGAR worksheet (five components and selected assessment time), Bishop score worksheet, and GTPAL history transcription aid. These are clinician-support tools, not diagnostic or treatment recommendations; entries are not saved or uploaded. Severe-range BP and urgent obstetric warning symptoms are highlighted.
 - **Print / Save PDF:** uses the browser's print dialog; select Save as PDF where supported.
 - **Privacy-minded:** all calculations and calendar generation run in the browser. No patient database, accounts, or server-side storage are implemented.
 - **PWA support:** install prompt where supported, iOS installation instructions, offline caching and dark mode.
@@ -70,6 +71,7 @@ This tool provides estimates and general educational information only. It does n
 - assets/js/date-utils.js — UTC-safe calendar date helpers
 - assets/js/calculator.js — pure calculation functions
 - assets/js/app.js — UI, English/Hindi toggle, milestone calendar, print/copy, BMI and PWA behavior
+- assets/js/clinical-tools.js — local-only MAP, APGAR, Bishop score and GTPAL helpers
 - manifest.webmanifest — PWA metadata
 - service-worker.js — offline caching
 - assets/icons/ — logo and favicon
