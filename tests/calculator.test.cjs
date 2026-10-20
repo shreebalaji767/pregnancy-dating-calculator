@@ -112,7 +112,7 @@ test('event binding is null-safe and the offline cache is versioned for the fix'
   assert.match(app, /if \(element\) element\.addEventListener\(eventName, handler, options\)/);
   assert.doesNotMatch(app, /\$\('[^']+'\)\.addEventListener\(/);
   assert.match(html, /name="mobile-web-app-capable" content="yes"/);
-  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v23'/);
+  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v24'/);
 });
 
 test('manifest and offline assets are wired correctly', () => {
