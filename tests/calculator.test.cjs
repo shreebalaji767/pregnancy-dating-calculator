@@ -112,7 +112,7 @@ test('event binding is null-safe and the offline cache is versioned for the fix'
   assert.match(app, /if \(element\) element\.addEventListener\(eventName, handler, options\)/);
   assert.doesNotMatch(app, /\$\('[^']+'\)\.addEventListener\(/);
   assert.match(html, /name="mobile-web-app-capable" content="yes"/);
-  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v8'/);
+  assert.match(serviceWorker, /CACHE_NAME = CACHE_PREFIX \+ 'v9'/);
 });
 
 test('manifest and offline assets are wired correctly', () => {
@@ -137,6 +137,14 @@ test('free planning tools are local-only and have export controls', () => {
   assert.match(html, /id="add-appt"/);
   assert.match(html, /id="export-planning"/);
   assert.match(html, /id="clear-planning-data"/);
+  assert.match(html, /id="contraction-toggle"/);
+  assert.match(html, /id="clear-contractions"/);
+  assert.match(html, /id="movement-add"/);
+  assert.match(html, /id="movement-reset"/);
+  assert.match(app, /function elapsedLabel\(/);
+  assert.match(app, /contractionRows/);
+  assert.match(app, /movementCount/);
+  assert.match(html, /contact your maternity unit immediately/i);
   assert.match(app, /pregnancy-toolkit-planning-v1/);
   assert.match(app, /function downloadText\(/);
   assert.match(app, /function initializePlanningTools\(/);
