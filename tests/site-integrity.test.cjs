@@ -48,7 +48,7 @@ test('responsive styles include narrow mobile, tablet and desktop layouts', () =
 
 test('planning overview exposes progress elements and live update hooks', () => {
   for (const id of ['bag-progress-label', 'bag-progress', 'bag-progress-bar', 'prep-progress-label', 'prep-progress', 'prep-progress-bar', 'appointment-count']) {
-    assert.match(html, new RegExp('\\\\bid="' + id + '"'));
+    assert.ok(html.includes('id="' + id + '"'), 'Missing planning overview element: ' + id);
   }
   assert.match(appJs, /function updatePlanningOverview|const updatePlanningOverview =/);
   assert.match(appJs, /updatePlanningOverview\(\)/);
