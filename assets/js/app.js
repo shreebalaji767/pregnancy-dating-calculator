@@ -449,6 +449,93 @@
       planningState.birth = readBirthFields();
       downloadText('pregnancy-planning-notes.txt', planningExportText());
     });
+    // Contraction timing and movement count are session-only; nothing is persisted or transmitted.
+    let contractionStartedAt = null;
+    let lastContractionStartedAt = null;
+    let contractionTick = null;
+    let contractionRows = [];
+    let movementCount = 0;
+    const elapsedLabel = ms => {
+      const total = Math.max(0, Math.floor(ms / 1000));
+      return String(Math.floor(total / 60)).padStart(2, '0') + ':' + String(total % 60).padStart(2, '0');
+    };
+    const renderContractionClock = () => {
+      $('contraction-clock').textContent = elapsedLabel(contractionStartedAt ? Date.now() - contractionStartedAt : 0);
+    };
+    const renderContractions = () => {
+      const list = $('contraction-list');
+      list.replaceChildren();
+      if (!contractionRows.length) {
+        const li = document.createElement('li');
+        li.className = 'empty-state';
+        li.textContent = t('No contractions recorded in this session.', 'इस सत्र में कोई संकुचन दर्ज नहीं है।');
+        list.appendChild(li);
+        return;
+      }
+      contractionRows.forEach((row, index) => {
+        const li = document.createElement('li');
+        const detail = document.createElement('span');
+        detail.textContent = t('Contraction ', 'संकुचन ') + (index + 1) + ': ' + t('duration ', 'अवधि ') + elapsedLabel(row.duration) + (row.interval == null ? '' : ' · ' + t('start interval ', 'शुरुआत का अंतराल ') + elapsedLabel(row.interval));
+        li.appendChild(detail);
+        list.appendChild(li);
+      });
+    };
+    on('contraction-toggle', 'click', () => {
+      if (contractionStartedAt == null) {
+        contractionStartedAt = Date.now();
+        $('contraction-toggle').textContent = t('End contraction', 'संकुचन समाप्त करें');
+        $('contraction-status').textContent = t('Timing… tap End contraction when it finishes.', 'समय मापा जा रहा है… समाप्त होने पर संकुचन समाप्त करें दबाएँ।');
+        renderContractionClock();
+        contractionTick = window.setInterval(renderContractionClock, 250);
+      } else {
+        const endedAt = Date.now();
+        const duration = Math.max(0, endedAt - contractionStartedAt);
+        const interval = lastContractionStartedAt == null ? null : Math.max(0, contractionStartedAt - lastContractionStartedAt);
+        contractionRows.push({ duration, interval, startedAt: contractionStartedAt, endedAt });
+        lastContractionStartedAt = contractionStartedAt;
+        contractionStartedAt = null;
+        if (contractionTick != null) window.clearInterval(contractionTick);
+        contractionTick = null;
+        renderContractionClock();
+        $('contraction-toggle').textContent = t('Start contraction', 'संकुचन शुरू करें');
+        $('contraction-status').textContent = t('Recorded. Start the next contraction when it begins.', 'दर्ज किया गया। अगला संकुचन शुरू होने पर टाइमर शुरू करें।');
+        renderContractions();
+      }
+    });
+    on('clear-contractions', 'click', () => {
+      if (contractionTick != null) window.clearInterval(contractionTick);
+      contractionTick = null; contractionStartedAt = null; lastContractionStartedAt = null; contractionRows = [];
+      renderContractionClock(); renderContractions();
+      $('contraction-toggle').textContent = t('Start contraction', 'संकुचन शुरू करें');
+      $('contraction-status').textContent = t('Session cleared.', 'सत्र साफ़ किया गया।');
+    });
+    on('export-contractions', 'click', () => {
+      const lines = [t('CONTRACTION TIMER SESSION', 'संकुचन टाइमर सत्र'), t('For personal notes only; follow your maternity team's advice.', 'केवल व्यक्तिगत नोट; अपनी मातृत्व टीम की सलाह मानें。'), ''];
+      if (!contractionRows.length) lines.push(t('No completed contractions recorded.', 'कोई पूरा संकुचन दर्ज नहीं है।'));
+      contractionRows.forEach((row, index) => lines.push((index + 1) + '. ' + t('Duration: ', 'अवधि: ') + elapsedLabel(row.duration) + (row.interval == null ? '' : ' · ' + t('Start interval: ', 'शुरुआत का अंतराल: ') + elapsedLabel(row.interval))));
+      downloadText('contraction-session.txt', lines.join('\n'));
+    });
+    on('movement-add', 'click', () => {
+      movementCount += 1;
+      $('movement-count').textContent = String(movementCount);
+    });
+    on('movement-reset', 'click', () => {
+      movementCount = 0;
+      $('movement-count').textContent = '0';
+    });
+    on('movement-export', 'click', () => {
+      downloadText('movement-session.txt', [
+        t('MOVEMENT SESSION COUNT', 'हलचल सत्र की गिनती'),
+        t('Count recorded in this page session: ', 'इस पेज सत्र में दर्ज गिनती: ') + movementCount,
+        t('This is not a diagnostic result. Follow your maternity team's guidance and contact them immediately for reduced or changed movements.', 'यह निदान नहीं है। अपनी मातृत्व टीम की सलाह मानें और हलचल कम या बदली होने पर तुरंत संपर्क करें।')
+      ].join('\n'));
+    });
+    renderContractionClock();
+    renderContractions();
+    window.addEventListener('pagehide', () => {
+      if (contractionTick != null) window.clearInterval(contractionTick);
+    });
+
     on('clear-planning-data', 'click', () => {
       if (!window.confirm(t('Clear all saved checklists, birth preferences and appointments from this browser?', 'इस ब्राउज़र से सभी सहेजी गई चेकलिस्ट, प्रसव प्राथमिकताएँ और अपॉइंटमेंट हटाएँ?'))) return;
       planningState = { checks: {}, birth: {}, appointments: [] };
